@@ -2,10 +2,13 @@ import { moviesListRef } from './refs';
 import { getTrendingMovies } from './apiService/moviesAPIService';
 import { moviesTemplate } from './templates/templates';
 
+const test = [];
+
 async function getTrendingMoviesAndUpdateUI() {
   try {
-    const { data } = await getTrendingMovies();
-    const movieItems = data.results.map(moviesTemplate).join('');
+    const movie = await getTrendingMovies();
+    // test.push(movie);
+    const movieItems = movie.data.results.map(moviesTemplate).join('');
     moviesListRef?.insertAdjacentHTML('beforeend', movieItems);
   } catch (error) {
     console.log(error);
@@ -13,3 +16,4 @@ async function getTrendingMoviesAndUpdateUI() {
 }
 
 getTrendingMoviesAndUpdateUI();
+console.log(test);
