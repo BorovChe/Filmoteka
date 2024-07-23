@@ -1,8 +1,11 @@
-@import "./base/vars";
-@import "./base/reset";
-@import "./base/base";
-@import "./base/mixin";
+@import './base/vars';
+@import './base/reset';
+@import './base/base';
+@import './base/mixin';
 
-@import "./components/container";
+@import './components/container';
+@import './components/modal';
 
-@import "./layouts/header";
+@import './layouts/header';
+@import './layouts/movies';
+@import './layouts/moviesDetails';
