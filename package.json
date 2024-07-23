@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel src/*.html --open",
-    "build": "parcel build src/*.html --public-url  /Filmoteka/",
+    "build": "parcel build src/*.html --public-url",
     "deploy": "gh-pages -d dist"
   },
   "keywords": [],

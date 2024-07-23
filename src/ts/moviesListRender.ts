@@ -6,9 +6,9 @@ const test = [];
 
 async function getTrendingMoviesAndUpdateUI() {
   try {
-    const movie = await getTrendingMovies();
-    // test.push(movie);
-    const movieItems = movie.data.results.map(moviesTemplate).join('');
+    const { data } = await getTrendingMovies();
+    // test.push(data);
+    const movieItems = data.results.map(moviesTemplate).join('');
     moviesListRef?.insertAdjacentHTML('beforeend', movieItems);
   } catch (error) {
     console.log(error);
