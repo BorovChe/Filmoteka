@@ -2,11 +2,12 @@
   "name": "filmoteka",
   "version": "1.0.0",
   "homepage": "https://BorovChe.github.io/Filmoteka",
+  "main": "index.js",
   "scripts": {
     "start": "parcel src/*.html --open",
     "build": "parcel build src/*.html --public-url /Filmoteka/",
     "deploy": "gh-pages -d dist",
-    "predeploy": "npm run build"
+    "predeploy": "npm run build npm run deploy"
   },
   "keywords": [],
   "author": "",
