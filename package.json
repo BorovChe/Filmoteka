@@ -8,6 +8,10 @@
     "deploy": "gh-pages -d dist",
     "predeploy": "npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BorovChe/Filmoteka.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
