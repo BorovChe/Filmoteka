@@ -1,4 +1,4 @@
-import { searchFormRef, moviesListRef } from './refs';
+import { searchFormRef, moviesListRefs } from './refs';
 import { getSearchMovies } from './apiService/moviesAPIService';
 import { moviesTemplate } from './templates/templates';
 
@@ -10,11 +10,11 @@ async function onSubmit(e: any) {
   const searchValue = form.elements.searchMovies.value;
   try {
     const { data } = await getSearchMovies(searchValue);
-    moviesListRef!.innerHTML = '';
+    moviesListRefs.trendingMoviesList!.innerHTML = '';
     const movieItems = data.results.map(moviesTemplate).join('');
-    moviesListRef?.insertAdjacentHTML('beforeend', movieItems);
-    console.log(data);
-  } catch (error) {}
-  console.log(searchValue);
+    moviesListRefs.trendingMoviesList?.insertAdjacentHTML('beforeend', movieItems);
+  } catch (error) {
+    console.log(error);
+  }
   form.reset();
 }

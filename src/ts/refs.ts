@@ -6,11 +6,12 @@ const modalRefs = {
   modal: document.querySelector('.modal'),
 };
 
-const moviesListRef = document.querySelector('.movies-list');
+const moviesListRefs = {
+  generalMoviesList: document.querySelector('.movies-list'),
+  trendingMoviesList: document.querySelector('.js-trendingMovies-list'),
+  libraryMoviesList: document.querySelector('.js-libraryMovies-list'),
+};
 
 const searchFormRef = document.querySelector('.js-form');
-// const movieDetailsRefs = {
 
-// };
-
-export { bodyRef, moviesListRef, modalRefs, searchFormRef };
+export { bodyRef, modalRefs, searchFormRef, moviesListRefs };

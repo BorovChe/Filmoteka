@@ -1,4 +1,13 @@
-//  "predeploy": "rm -rf build && npm run build",
-// "deploy": "gh-pages -d build"
+import { moviesListRefs } from './refs';
+import { moviesTemplate } from './templates/templates';
+import { getDataFromLocalStorage } from './localStorage/localStorageController';
 
-// "build": "parcel build src/*.html --public-url",
+const watchedList = getDataFromLocalStorage('watchedListMovies');
+const queueList = getDataFromLocalStorage('queueListMovies');
+
+function test() {
+  const movieItems = watchedList.map(moviesTemplate).join('');
+  moviesListRefs.libraryMoviesList!.innerHTML = movieItems;
+}
+
+test();

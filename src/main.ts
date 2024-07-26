@@ -1,3 +1,3 @@
 import './ts/moviesListRender';
 import './ts/searchMovies';
-import './ts/movieDetailsRender';
+import './ts/modal';
