@@ -1,12 +1,199 @@
 .header {
-  max-width: 1216px;
+  max-width: 280px;
   margin-right: auto;
   margin-left: auto;
-  border-radius: 15px;
-  background: linear-gradient(
-      314deg,
-      rgba(0, 0, 0, 0.49) 0%,
-      rgba(0, 0, 0, 0) 100%
-    ),
-    url(https://s3-alpha-sig.figma.com/img/f0d6/2314/1b7b6dcf74c141453e862cad9789aa14?Expires=1722211200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=AXWHMExdmOSJB3Sq0PyUC~oHVHiWzlXiH1WEq70iuFV2BoSkL5ALEtYNU3YkucWxH7qP-SfWte-TcJPPu6G~nD8JNWJjIPif9iY7A-uP3EgWKxBfbWdkyiII-Qbsxxy9LNXopJpoGp~PU7~VeKJcXdYUuNNN6zupG62Gq4fzmzGWJIrO3mb3qsvUNim~vR1NQ3JyzoFc9GdgkMNULspTB21d-a-PFsyYFmxIA9EvPGtJtJ43teH8ymdlPgXVjyNKkj-0YYEQoKvsInmvgtIA10G94e-3B-9GdMlLfCzZ3cv14hBqlMFHsDI-dLRledzicoCdKYRqCRQVpUHU7FKrQw__);
+  border-radius: 10px;
+
+  background-image: url(images/header/header_mob@1x.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  @media (min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+    background-image: url(images/header/header_mob@2x.png);
+  }
+
+  @include tablet {
+    max-width: 704px;
+    border-radius: 15px;
+
+    background-image: url(images/header/header_tab@1x.png);
+
+    @media (min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+      background-image: url(images/header/header_tab@2x.png);
+    }
+  }
+
+  @include desk {
+    max-width: 1216px;
+
+    background-image: url(images/header/header_desk@1x.png);
+
+    @media (min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+      background-image: url(images/header/header_desk@2x.png);
+    }
+  }
+}
+
+.header-container {
+  padding: 14px 14px 20px 14px;
+
+  @include tablet {
+    padding: 16px;
+  }
+
+  @include desk {
+    padding: 16px 32px 32px 32px;
+  }
+}
+
+.header-wrapper {
+  padding-bottom: 312px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @include tablet {
+    padding-bottom: 105px;
+
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 4px;
+  }
+
+  @include desk {
+    padding-bottom: 151px;
+    gap: 8px;
+  }
+}
+
+.header-nav-list {
+  display: flex;
+  gap: 4px;
+
+  @include desk {
+    gap: 8px;
+  }
+}
+
+.header-link {
+  border-radius: 100px;
+  padding: 10px 26px;
+
+  line-height: 1;
+  text-transform: uppercase;
+  background-color: $light-color;
+}
+
+.header-home-link {
+  padding: 10px 26px;
+
+  @include tablet {
+    padding: 12px 24px;
+  }
+
+  @include desk {
+    padding: 14px 32px;
+  }
+}
+.header-library-link {
+  padding: 10px 22px;
+
+  @include tablet {
+    padding: 12px 20px;
+  }
+
+  @include desk {
+    padding: 14px 24px;
+  }
+}
+
+.header-form {
+  position: relative;
+}
+
+.header-input {
+  width: 100%;
+  border-radius: 100px;
+  padding: 10px 14px;
+  border: none;
+  outline: none;
+
+  line-height: 1;
+  font-weight: 400;
+
+  &::placeholder {
+    font-weight: 400;
+    color: $black-color;
+  }
+
+  @include tablet {
+    max-width: 165px;
+    padding: 10px 16px;
+
+    font-size: 14px;
+  }
+
+  @include desk {
+    padding: 12px 16px;
+  }
+}
+
+.header-search-btn {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+
+  border: none;
+  background-color: transparent;
+
+  @include desk {
+    top: 12px;
+  }
+}
+
+.header-search-icon {
+  @include tablet {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.header-logo-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  @include tablet {
+    justify-content: flex-start;
+    gap: 16px;
+  }
+}
+
+.header-logo-icon {
+  @include tablet {
+    width: 40px;
+    height: 40px;
+  }
+
+  @include desk {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.header-title {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1;
+  color: $light-color;
+
+  @include tablet {
+    font-size: 40px;
+  }
+
+  @include desk {
+    font-size: 64px;
+  }
 }

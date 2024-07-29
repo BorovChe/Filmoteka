@@ -10,13 +10,16 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="./styles/main.scss" />
+    <link rel="stylesheet" href="./main.scss" />
     <title>Library</title>
   </head>
-  <body>
+  <body class="library-body">
     <include src="./partials/libraryPage/myLibraryHeader.html"></include>
-    <include src="./partials/libraryPage/movies.html"></include>
+    <main>
+      <include src="./partials/libraryPage/movies.html"></include>
+    </main>
+
     <include src="./partials/modal.html"></include>
-    <script type="module" src="./library.ts"></script>
+    <script type="module" src="./main.ts"></script>
   </body>
 </html>

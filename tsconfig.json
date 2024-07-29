@@ -13,10 +13,12 @@
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    "resolveJsonModule": false,
+    "isolatedModules": false,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src", "public/menuItems.js", "src/UI/images/CategoryListImages"]
+  "include": ["src/**/*"]
 }

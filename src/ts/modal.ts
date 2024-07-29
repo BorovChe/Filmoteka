@@ -1,5 +1,6 @@
-import { bodyRef, modalRefs, moviesListRefs } from './refs';
+import { bodyRef, modalRefs, moviesListRefs, btnLibraryMoviesRefs } from './refs';
 import { getMovieDetails } from './apiService/moviesAPIService';
+import { renderMovies, createTemplate } from './moviesInMyLibrary';
 import { getDataFromLocalStorage, setDataFromLocalSrorage } from './localStorage/localStorageController';
 import { disableScroll, enableScroll } from './scroll/disableScroll';
 import { movieDetailsTemplate } from './templates/templates';
@@ -56,10 +57,18 @@ function onClickWacthedBtn(movie: any, targetId: any, btnRef: any) {
     const index = findIndexMovie(watchedList, targetId);
     watchedList.splice(index, 1);
     setDataFromLocalSrorage('watchedListMovies', watchedList);
+
+    if (btnLibraryMoviesRefs.watchedBtn?.classList.contains('active-btn')) {
+      renderMovies(createTemplate(watchedList));
+    }
   } else {
     btnRef!.textContent = 'remove to Watched';
     watchedList.push(movie);
     setDataFromLocalSrorage('watchedListMovies', watchedList);
+
+    if (btnLibraryMoviesRefs.watchedBtn?.classList.contains('active-btn')) {
+      renderMovies(createTemplate(watchedList));
+    }
   }
 }
 
@@ -69,10 +78,18 @@ function onClickQueueBtn(movie: any, targetId: any, btnRef: any) {
     const index = findIndexMovie(queueList, targetId);
     queueList.splice(index, 1);
     setDataFromLocalSrorage('queueListMovies', queueList);
+
+    if (btnLibraryMoviesRefs.queueBtn?.classList.contains('active-btn')) {
+      renderMovies(createTemplate(queueList));
+    }
   } else {
     btnRef!.textContent = 'remove to Queue';
     queueList.push(movie);
     setDataFromLocalSrorage('queueListMovies', queueList);
+
+    if (btnLibraryMoviesRefs.queueBtn?.classList.contains('active-btn')) {
+      renderMovies(createTemplate(queueList));
+    }
   }
 }
 

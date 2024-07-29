@@ -1,4 +1,5 @@
 const bodyRef = document.body;
+const libraryBodyRef = document.querySelector('.library-body');
 
 const modalRefs = {
   closeModalBtn: document.querySelector('[data-action="close-modal"]'),
@@ -12,6 +13,11 @@ const moviesListRefs = {
   libraryMoviesList: document.querySelector('.js-libraryMovies-list'),
 };
 
+const btnLibraryMoviesRefs = {
+  watchedBtn: document.querySelector('.wached-btn'),
+  queueBtn: document.querySelector('.queue-btn'),
+};
+
 const searchFormRef = document.querySelector('.js-form');
 
-export { bodyRef, modalRefs, searchFormRef, moviesListRefs };
+export { bodyRef, libraryBodyRef, modalRefs, searchFormRef, moviesListRefs, btnLibraryMoviesRefs };

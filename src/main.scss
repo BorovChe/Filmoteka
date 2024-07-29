@@ -1,0 +1,12 @@
+@import './styles/base/vars';
+@import './styles/base/reset';
+@import './styles/base/base';
+@import './styles/base/mixin';
+
+@import './styles/components/container';
+@import './styles/components/modal';
+@import './styles/components/hidden';
+
+@import './styles/layouts/header';
+@import './styles/layouts/movies';
+@import './styles/layouts/moviesDetails';
