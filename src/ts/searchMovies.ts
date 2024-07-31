@@ -9,9 +9,9 @@ async function onSubmit(e: any) {
   const form = e.target;
   const searchValue = form.elements.searchMovies.value;
   try {
-    const { data } = await getSearchMovies(searchValue);
+    const { results } = await getSearchMovies(searchValue);
     moviesListRefs.trendingMoviesList!.innerHTML = '';
-    const movieItems = data.results.map(moviesTemplate).join('');
+    const movieItems = results.map(moviesTemplate).join('');
     moviesListRefs.trendingMoviesList?.insertAdjacentHTML('beforeend', movieItems);
   } catch (error) {
     console.log(error);

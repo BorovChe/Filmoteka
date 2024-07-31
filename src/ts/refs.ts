@@ -18,6 +18,8 @@ const btnLibraryMoviesRefs = {
   queueBtn: document.querySelector('.queue-btn'),
 };
 
+const paginationRef = document.querySelector('.tui-pagination');
+
 const searchFormRef = document.querySelector('.js-form');
 
-export { bodyRef, libraryBodyRef, modalRefs, searchFormRef, moviesListRefs, btnLibraryMoviesRefs };
+export { bodyRef, libraryBodyRef, modalRefs, searchFormRef, moviesListRefs, btnLibraryMoviesRefs, paginationRef };
