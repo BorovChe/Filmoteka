@@ -4,7 +4,7 @@
   "homepage": "https://BorovChe.github.io/Filmoteka",
   "scripts": {
     "start": "parcel src/index.html --open",
-    "build": "parcel build src/index.html --public-url /Filmoteka/",
+    "build": "parcel build src/index.html --no-cache --public-url /Filmoteka/",
     "deploy": "gh-pages -d dist",
     "predeploy": "npm run build"
   },

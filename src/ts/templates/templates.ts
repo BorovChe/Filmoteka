@@ -1,11 +1,11 @@
-const moviesTemplate = ({ id, poster_path, original_title, original_name, release_date }: any): string => {
+const moviesTemplate = ({ id, title, posterSrc, releaseDate, genres }: any): string => {
   return `
         <li data-id=${id} class='movie-item'>
-          <img loading='lazy' src="https://image.tmdb.org/t/p/w500${poster_path}"
-           alt=${original_title || original_name} 
+          <img class='movie-img' loading='lazy' src="${posterSrc}"
+           alt=${title} 
             width="394" height="574"/>
-          <h3>${original_title || original_name}</h3>
-          <p> | <span>${release_date}</span></p>
+          <h3 class='movie-title' >${title}</h3>
+          <p class='movie-details'> ${genres} | <span>${releaseDate}</span></p>
         </li>
       `;
 };

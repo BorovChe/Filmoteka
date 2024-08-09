@@ -1,9 +1,10 @@
-import { bodyRef, modalRefs, moviesListRefs, btnLibraryMoviesRefs } from './refs';
-import { getMovieDetails } from './apiService/moviesAPIService';
-import { renderMovies, createTemplate } from './moviesInMyLibrary';
+import { bodyRef, modalRefs, moviesListRefs, btnLibraryMoviesRefs } from './common/refs';
+import { getMovieDetails, getGenresMovie } from './apiService/moviesAPIService';
 import { getDataFromLocalStorage, setDataFromLocalSrorage } from './localStorage/localStorageController';
-import { disableScroll, enableScroll } from './scroll/disableScroll';
+import { disableScroll, enableScroll } from './helpers/scroll/disableScroll';
 import { movieDetailsTemplate } from './templates/templates';
+import { createNewMoviesList } from './helpers/formattedData';
+import { initPagination } from './helpers/pagination';
 
 const watchedList = getDataFromLocalStorage('watchedListMovies');
 const queueList = getDataFromLocalStorage('queueListMovies');
@@ -14,10 +15,13 @@ async function onClickMovieItem(e: any) {
   const li = e.target.closest('li');
   if (!li) return;
   const movieId = li.dataset.id;
+  onOpenModal();
   try {
-    onOpenModal();
+    modalRefs.modal!.innerHTML = '';
     const { data } = await getMovieDetails(movieId);
-    modalRefs.modal!.innerHTML = movieDetailsTemplate(data);
+    console.log(data);
+
+    modalRefs.modal?.insertAdjacentHTML('afterbegin', movieDetailsTemplate(data));
 
     modalRefs.backdrop?.addEventListener('click', onClickBackdrop);
 
@@ -59,15 +63,23 @@ function onClickWacthedBtn(movie: any, targetId: any, btnRef: any) {
     setDataFromLocalSrorage('watchedListMovies', watchedList);
 
     if (btnLibraryMoviesRefs.watchedBtn?.classList.contains('active-btn')) {
-      renderMovies(createTemplate(watchedList));
+      const genres = getGenresMovie();
+
+      const refactoringData = createNewMoviesList(watchedList, genres);
+      // moviesListRender(moviesListRefs.libraryMoviesList, refactoringData);
+      initPagination({ page: 1, itemsPerPage: 20, totalItems: watchedList.length });
     }
   } else {
     btnRef!.textContent = 'remove to Watched';
     watchedList.push(movie);
     setDataFromLocalSrorage('watchedListMovies', watchedList);
-
+    const slice = watchedList.slice(0, 20);
     if (btnLibraryMoviesRefs.watchedBtn?.classList.contains('active-btn')) {
-      renderMovies(createTemplate(watchedList));
+      const genres = getGenresMovie();
+
+      const refactoringData = createNewMoviesList(slice, genres);
+      // moviesListRender(moviesListRefs.libraryMoviesList, refactoringData);
+      initPagination({ page: 1, itemsPerPage: 20, totalItems: watchedList.length });
     }
   }
 }
@@ -80,21 +92,27 @@ function onClickQueueBtn(movie: any, targetId: any, btnRef: any) {
     setDataFromLocalSrorage('queueListMovies', queueList);
 
     if (btnLibraryMoviesRefs.queueBtn?.classList.contains('active-btn')) {
-      renderMovies(createTemplate(queueList));
+      const genres = getGenresMovie();
+
+      const refactoringData = createNewMoviesList(queueList, genres);
+      // moviesListRender(moviesListRefs.libraryMoviesList, refactoringData);
     }
   } else {
     btnRef!.textContent = 'remove to Queue';
     queueList.push(movie);
     setDataFromLocalSrorage('queueListMovies', queueList);
-
+    const slice = queueList.slice(0, 20);
     if (btnLibraryMoviesRefs.queueBtn?.classList.contains('active-btn')) {
-      renderMovies(createTemplate(queueList));
+      const genres = getGenresMovie();
+
+      const refactoringData = createNewMoviesList(slice, genres);
+      // moviesListRender(moviesListRefs.libraryMoviesList, refactoringData);
     }
   }
 }
 
 function findIndexMovie(movielist: any, targetId: any) {
-  return movielist.findIndex(({ id }) => String(id) === targetId);
+  return movielist.findIndex(({ id }: any) => String(id) === targetId);
 }
 
 function someFunction(movielist: any, targetId: any) {
