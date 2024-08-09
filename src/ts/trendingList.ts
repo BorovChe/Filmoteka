@@ -9,19 +9,8 @@ async function getTrendingMoviesAndUpdateUI(renderPage: number) {
     if (homebodyRef) {
       paginationSettings.moviesType = 'TRENDING_MOVIES';
 
-      // const movies = await getTrendingMovies(renderPage);
-      // const { page, results, total_results: totalItems } = movies;
-
-      // console.log(movies);
-      // console.log(genres);
-
       const [movies, genres] = await Promise.all([getTrendingMovies(renderPage), getGenresMovie()]);
       const { page, results, total_results: totalItems } = movies;
-
-      // console.log(movies);
-      // console.log(genres);
-
-      // console.log(genres);
 
       const refactoringData = createNewMoviesList(results, genres);
 
