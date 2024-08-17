@@ -30,7 +30,7 @@
 
   @include desk {
     max-width: 394;
-    min-height: 660px;
+    min-height: 664px;
   }
 }
 
@@ -43,7 +43,7 @@
   }
 
   @include desk {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 }
 
@@ -55,7 +55,7 @@
   color: $black-color;
 
   @include desk {
-    font-size: 16px;
+    font-size: 20px;
     line-height: 1.2;
     margin-bottom: auto;
   }

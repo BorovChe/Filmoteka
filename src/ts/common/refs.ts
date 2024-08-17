@@ -1,13 +1,17 @@
-import { ModalRefs, MoviesListRefs, BtnLibraryRefs } from 'ts/helpers/interfaces/domRefsIntarfaces';
+import { HeaderLinkRefs, ModalRefs, MoviesListRefs, BtnLibraryRefs } from 'ts/helpers/interfaces/domRefsIntarfaces';
 
 const bodyRef: HTMLElement | null = document.body;
-const homebodyRef: HTMLElement | null = document.querySelector('.homeBody');
-const libraryBodyRef: HTMLElement | null = document.querySelector('.library-body');
+
+const headerLinkRefs: HeaderLinkRefs = {
+  home: document.querySelector('.header-home-link'),
+  library: document.querySelector('.header-library-link'),
+};
 
 const modalRefs: ModalRefs = {
-  closeModalBtn: document.querySelector('[data-action="close-modal"]'),
+  closeModalBtn: document.querySelector('.btn-close-modal'),
   backdrop: document.querySelector('.backdrop'),
   modal: document.querySelector('.modal'),
+  movieDetailsContainer: document.querySelector('.movieDetailsContainer'),
 };
 
 const moviesListRefs: MoviesListRefs = {
@@ -23,15 +27,6 @@ const btnLibraryMoviesRefs: BtnLibraryRefs = {
 
 const paginationRef: HTMLElement | null = document.querySelector('.tui-pagination');
 
-const searchFormRef: HTMLElement | null = document.querySelector('.js-form');
+const searchFormRef = document.querySelector('.js-form') as HTMLFormElement;
 
-export {
-  bodyRef,
-  homebodyRef,
-  libraryBodyRef,
-  modalRefs,
-  searchFormRef,
-  moviesListRefs,
-  btnLibraryMoviesRefs,
-  paginationRef,
-};
+export { bodyRef, headerLinkRefs, modalRefs, searchFormRef, moviesListRefs, btnLibraryMoviesRefs, paginationRef };

@@ -17,3 +17,7 @@ body {
   color: $black-color;
   background-color: $light-color;
 }
+
+body::-webkit-scrollbar {
+  width: 0px !important;
+}

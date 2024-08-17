@@ -1,13 +1,19 @@
+interface HeaderLinkRefs {
+  home: HTMLElement | null;
+  library: HTMLElement | null;
+}
+
 interface ModalRefs {
   closeModalBtn: HTMLElement | null;
   backdrop: HTMLElement | null;
   modal: HTMLElement | null;
+  movieDetailsContainer: HTMLElement | null;
 }
 
 interface MoviesListRefs {
   generalMoviesList: HTMLElement | null;
   homeMoviesList: HTMLElement | null;
-  libraryMoviesList: HTMLElement | null;
+  libraryMoviesList: HTMLDivElement | null;
 }
 
 interface BtnLibraryRefs {
@@ -15,4 +21,9 @@ interface BtnLibraryRefs {
   queueBtn: HTMLElement | null;
 }
 
-export { ModalRefs, MoviesListRefs, BtnLibraryRefs };
+interface BtnLibraryRefsInModal {
+  watched: HTMLElement | null;
+  queue: HTMLElement | null;
+}
+
+export { HeaderLinkRefs, ModalRefs, MoviesListRefs, BtnLibraryRefs, BtnLibraryRefsInModal };

@@ -1,15 +1,16 @@
 import { searchFormRef, moviesListRefs } from './common/refs';
-import { getSearchMovies, getGenresMovie } from './apiService/moviesAPIService';
-import { initPagination, paginationSettings } from './helpers/pagination';
-import { createNewMoviesList } from './helpers/formattedData';
-import { moviesListRender } from './helpers/moviesListRender';
+import { getSearchMovies } from './apiService/moviesAPIService';
+import { paginationSettings } from './helpers/pagination';
+import { moviesListRender } from './common/render/moviesListRender';
+
+import { NewMovie } from './helpers/interfaces/movies';
 
 searchFormRef?.addEventListener('submit', onSubmit);
 
-async function onSubmit(e: any) {
+async function onSubmit(e: any): Promise<void> {
   e.preventDefault();
   const form = e.target;
-  const searchValue = form.elements.searchMovies.value.trim();
+  const searchValue: string = form.elements.searchMovies.value.trim();
 
   paginationSettings.moviesType = 'SEARCH_MOVIES';
   paginationSettings.searchQuery = searchValue;
@@ -19,19 +20,10 @@ async function onSubmit(e: any) {
     return;
   }
   try {
-    const [movies, genres]: any = await Promise.all([
-      getSearchMovies(searchValue, paginationSettings.startPage),
-      getGenresMovie(),
-    ]);
-    const { page, results, total_results: totalItems } = movies;
-
-    const refactoringData = createNewMoviesList(results, genres);
-
-    moviesListRender(moviesListRefs.homeMoviesList, refactoringData);
-    initPagination({ page, itemsPerPage: results.length, totalItems });
+    const searchMovies: NewMovie[] = await getSearchMovies(searchValue, paginationSettings.startPage);
+    moviesListRender(moviesListRefs.homeMoviesList, searchMovies);
   } catch (error) {
     console.log(error);
   }
   form.reset();
-  // searchFormRef?.removeEventListener('submit', onSubmit);
 }

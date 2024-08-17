@@ -10,25 +10,32 @@ const moviesTemplate = ({ id, title, posterSrc, releaseDate, genres }: any): str
       `;
 };
 
-const movieDetailsTemplate = ({
-  id,
-  poster_path,
-}: // original_title,
-// popularity,
-// vote_average,
-// vote_count,
-// overview,
-any): string => {
+const movieDetailsTemplate = ({ id, posterSrc, vote, votes, popularity, title, genres, about }: any): string => {
   return `
-   <div class='movieDetailsContainer'>
-  <img loading='lazy' src="https://image.tmdb.org/t/p/w500${poster_path}" alt="" />
-      <div class="details">
-        <h2>grgrg</h2>
-        <h3>about</h3>
-        <p>grg</p>
+    <img class='details-poster' loading='lazy' src="${posterSrc}" alt="" />
+    <div>
+     <h2 class='modal-title'>${title}</h2>
+    <div class="details-block">
+      <div class="details-title-block">
+        <p>Vote / Votes</p>
+        <p>Popularity</p>
+        <p>Original Title </p>
+        <p>Genre</p>
+      </div>
+      <div class="details-value-block">
+       <p class=vote-block><span class='vote' >${vote}</span>/<span class='votes' >${votes}</span></p>
+       <p>${popularity}</p> 
+       <p>${title}</p>
+       <p>${genres}</p>
+      </div>
+    </div>
+      <div class='about'>
+        <h3 class='about-title' >About</h3>
+        <p>${about}</p>
+      </div>
         <ul class="btn-list">
-          <li><button class='js-btn-watched' data-id="${id}">add to Watched</button></li>
-          <li><button class='js-btn-queue' data-id="${id}">add to Queue</button></li>
+          <li><button class='modal-library-btn js-btn-watched' data-id="${id}">add to Watched</button></li>
+          <li><button class='modal-library-btn js-btn-queue' data-id="${id}">add to Queue</button></li>
         </ul>
         </div>
        `;

@@ -4,10 +4,9 @@ import { paginationRef } from '../common/refs';
 import 'tui-pagination/dist/tui-pagination.css';
 
 import { moviesListRefs } from '../common/refs';
-import { getTrendingMovies, getSearchMovies, getGenresMovie } from '../apiService/moviesAPIService';
+import { getTrendingMovies, getSearchMovies, getMovieDetails } from '../apiService/moviesAPIService';
 import { getDataFromLocalStorage } from '../localStorage/localStorageController';
-import { createNewMoviesList } from './formattedData';
-import { moviesListRender } from './moviesListRender';
+import { libraryMoviesListRender, moviesListRender } from '../common/render/moviesListRender';
 
 interface PaginationSetting {
   startPage: number;
@@ -22,6 +21,8 @@ const paginationSettings: PaginationSetting = {
   totalItemsHome: 0,
   searchQuery: '',
 };
+
+let moviesList: any = [];
 
 function initPagination({ page, itemsPerPage, totalItems }: any) {
   const options = {
@@ -50,36 +51,32 @@ function initPagination({ page, itemsPerPage, totalItems }: any) {
   pagination.on('afterMove', async ({ page }: any) => {
     if (paginationSettings.moviesType === 'TRENDING_MOVIES') {
       try {
-        const { results } = await getTrendingMovies(page);
-        const genres = await getGenresMovie();
-
-        const refactoringData = createNewMoviesList(results, genres);
-        moviesListRender(moviesListRefs.homeMoviesList, refactoringData);
+        const trendingMovies = await getTrendingMovies(page);
+        moviesListRender(moviesListRefs.homeMoviesList, trendingMovies);
       } catch (error) {
         console.log(error);
       }
     }
     if (paginationSettings.moviesType === 'SEARCH_MOVIES') {
       try {
-        const { results } = await getSearchMovies(paginationSettings.searchQuery, page);
-        const genres = await getGenresMovie();
+        const searchMovies = await getSearchMovies(paginationSettings.searchQuery, page);
 
-        const refactoringData = createNewMoviesList(results, genres);
-        moviesListRender(moviesListRefs.homeMoviesList, refactoringData);
+        moviesListRender(moviesListRefs.homeMoviesList, searchMovies);
       } catch (error) {
         console.log(error);
       }
     }
 
-    const startList = getDataFromLocalStorage('watchedListMovies');
+    const watchedList = getDataFromLocalStorage('watchedListMovies');
     if (paginationSettings.moviesType === 'WATCHED_MOVIES') {
       let start = (page - 1) * itemsPerPage;
       let end = start + itemsPerPage;
-      const slice = startList.slice(start, end);
-      const genres = await getGenresMovie();
+      const slice = watchedList.slice(start, end);
 
-      const refactoringData = createNewMoviesList(slice, genres);
-      moviesListRender(moviesListRefs.libraryMoviesList, refactoringData);
+      const promises = slice.map((item: any) => getMovieDetails(item));
+      moviesList = await Promise.allSettled(promises);
+
+      libraryMoviesListRender(moviesListRefs.libraryMoviesList, moviesList);
     }
 
     const queueList = getDataFromLocalStorage('queueListMovies');
@@ -87,10 +84,11 @@ function initPagination({ page, itemsPerPage, totalItems }: any) {
       let start = (page - 1) * itemsPerPage;
       let end = start + itemsPerPage;
       const slice = queueList.slice(start, end);
-      const genres = await getGenresMovie();
 
-      const refactoringData = createNewMoviesList(slice, genres);
-      moviesListRender(moviesListRefs.libraryMoviesList, refactoringData);
+      const promises = slice.map((item: any) => getMovieDetails(item));
+      moviesList = await Promise.allSettled(promises);
+
+      libraryMoviesListRender(moviesListRefs.libraryMoviesList, moviesList);
     }
   });
 }

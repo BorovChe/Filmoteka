@@ -88,6 +88,11 @@
   background-color: $light-color;
 }
 
+.header-link-active {
+  color: $light-color;
+  background-color: $black-color;
+}
+
 .header-home-link {
   padding: 10px 26px;
 
@@ -199,4 +204,85 @@
   @include desk {
     font-size: 64px;
   }
+}
+
+// LIBRARY HEADER
+
+.library-header-container {
+  position: relative;
+  padding-bottom: 74px;
+
+  @include tablet {
+    padding-bottom: 16px;
+  }
+
+  @include desk {
+    padding-bottom: 32px;
+  }
+}
+
+.library-header-nav-list {
+  padding-bottom: 348px;
+
+  @include tablet {
+    padding-bottom: 105px;
+  }
+
+  @include desk {
+    padding-bottom: 151px;
+  }
+}
+
+.library-movie-list-btn {
+  position: absolute;
+  bottom: 24px;
+  right: 50%;
+  transform: translateX(50%);
+  display: flex;
+  justify-content: center;
+  gap: 4;
+
+  @include tablet {
+    right: 16px;
+    bottom: 160px;
+    transform: translateX(0);
+  }
+
+  @include desk {
+    right: 32px;
+    bottom: 247px;
+    gap: 8px;
+  }
+}
+
+.library-nav-btn {
+  border-radius: 100px;
+  padding: 10px 23px;
+  border: none;
+
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+  text-align: center;
+  color: $accent-color;
+  background: $light-color;
+
+  @include tablet {
+    padding: 12px 24px;
+  }
+
+  @include desk {
+    padding: 14px 32px;
+  }
+}
+
+.queue-btn {
+  @include desk {
+    padding: 14px 24px;
+  }
+}
+
+.active-movie-list {
+  color: $light-color;
+  background-color: $accent-color;
 }

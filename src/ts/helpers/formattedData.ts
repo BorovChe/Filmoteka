@@ -1,19 +1,30 @@
-// import { getGenresMovie } from 'ts/apiService/moviesAPIService';
+import { Movie, Genre, NewMovie, NewDetails } from './interfaces/movies';
+import PosterStub from '../../images/stubs/PosterStub.jpg';
 
-async function createNewMoviesList(data: any, genresList: any) {
-  // const genresList = await getGenresMovie();
-  const copyData = [...data];
-  const newArr: any[] = [];
+function createNewMoviesList(data: Movie[], genresList?: Genre[]) {
+  const copyData: Movie[] = [...data];
+  const newArr: NewMovie[] = [];
 
-  copyData.map((item: any) => {
-    const { id, poster_path, backdrop_path, original_title, original_name, genre_ids, genres, release_date } = item;
-    const newMoviesList: any = {};
+  copyData.map((item: Movie) => {
+    const {
+      id,
+      posterSrc,
+      poster_path,
+      backdrop_path,
+      original_title,
+      title,
+      genre_ids,
+      genres,
+      release_date,
+      releaseDate,
+    }: Movie = item;
 
-    newMoviesList.id = id;
-    newMoviesList.title = original_title || original_name;
-    newMoviesList.posterSrc = `https://image.tmdb.org/t/p/w500${poster_path || backdrop_path}`;
-    newMoviesList.releaseDate = release_date.slice(0, 4);
-    newMoviesList.genres = createGenresName(genresList, genre_ids, genres) || '';
+    const newMoviesList = {} as NewMovie;
+    newMoviesList.id = String(id);
+    newMoviesList.title = title || original_title;
+    newMoviesList.posterSrc = posterSrc || moviePosterCheck(poster_path, backdrop_path);
+    newMoviesList.releaseDate = releaseDate ? releaseDate : release_date.slice(0, 4);
+    newMoviesList.genres = createGenresName(genre_ids, genres, genresList);
 
     newArr.push(newMoviesList);
   });
@@ -21,73 +32,81 @@ async function createNewMoviesList(data: any, genresList: any) {
   return newArr;
 }
 
-function createGenresName(genresList: any, genre_ids: any, genres: any) {
-  if (genre_ids) {
-    if (genre_ids.length === 0) {
-      return 'Genre unknown';
-    }
+function createNewMoviesDetails(details: Movie[]) {
+  const copyDetails: Movie[] = { ...details };
+  const newDetails = {} as NewDetails;
+  const {
+    id,
+    backdrop_path,
+    original_title,
+    overview,
+    popularity,
+    poster_path,
+    title,
+    genres,
+    release_date,
+    vote_average,
+    vote_count,
+  }: any = copyDetails;
 
-    if (genre_ids > 3) {
-      genre_ids.splice(3);
-    }
+  newDetails.id = id;
+  newDetails.posterSrc = moviePosterCheck(poster_path, backdrop_path);
+  newDetails.vote = roundSecondDecimalPlace(vote_average);
+  newDetails.votes = roundSecondDecimalPlace(vote_count);
+  newDetails.popularity = roundSecondDecimalPlace(popularity);
+  newDetails.releaseDate = release_date.slice(0, 4);
+  newDetails.title = title || original_title;
+  newDetails.genres = genresInDetails(genres);
+  newDetails.about = overview;
 
-    const firstGenreName = genresList.genres.find(({ id }: any) => id === genre_ids[0]).name;
-    return firstGenreName;
-  } else if (genres) {
-    if (genres.length === 0) {
-      return 'Genre unknown';
-    }
-    return genres[0].name;
+  return newDetails;
+}
+
+function roundSecondDecimalPlace(number: number): number {
+  return Math.round(number * 10) / 10;
+}
+
+function moviePosterCheck(poster_path: string, backdrop_path: string): string {
+  if (poster_path || backdrop_path) {
+    return `https://image.tmdb.org/t/p/w500${poster_path || backdrop_path}`;
+  } else {
+    return PosterStub;
   }
 }
 
-export { createNewMoviesList };
+function createGenresName(genre_ids: [number], genres?: string, genresList?: Genre[]): string {
+  if (genre_ids && genre_ids.length > 0) {
+    const limitedGenreIds: number[] = genre_ids.slice(0, 2);
 
-const moviesTemplate = ({ id, poster_path, original_title, original_name, genre_ids, release_date }: any): string => {
-  return `
-        <li data-id=${id} class='movie-item'>
-          <img class='movie-img' loading='lazy' src="${poster_path}"
-           alt=${original_title || original_name} 
-            width="394" height="574"/>
-          <h3>${original_title || original_name}</h3>
-          <p> ${genre_ids} | <span>${release_date}</span></p>
-        </li>
-      `;
-};
+    if (genresList) {
+      const genreNames: string[] = limitedGenreIds
+        .map((id: number) => genresList.find((genre: Genre) => genre.id === id)?.name)
+        .filter((name?: string) => name !== undefined);
 
-// if (item.poster_path || item.backdrop_path) {
-//   item.poster_path =
-//     `https://image.tmdb.org/t/p/w500${item.poster_path}` || `https://image.tmdb.org/t/p/w500${item.backdrop_path}`;
-// } else {
-//   item.poster_path =
-//     'https://st4.depositphotos.com/14953852/22772/v/450/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg';
-// }
+      if (genre_ids.length > 2) {
+        return genreNames.join(', ') + ', Other';
+      } else {
+        return genreNames.length > 0 ? genreNames.join(', ') : 'Genre unknown';
+      }
+    }
+  }
 
-// if (item.original_name || item.original_name) {
-//   item.original_title = item.original_name || item.original_name;
-// }
+  if (genres) {
+    return genres;
+  }
 
-// if (item.release_date) {
-//   item.release_date = item.release_date.slice(0, 4);
-// }
+  return 'Genre unknown';
+}
 
-// console.log(genresList.genres);
-// const genres = genresList.filter();
+function genresInDetails(genres: Genre[]): string {
+  if (!genres) return 'Genre unknown';
+  const genresList: string[] = genres.map(({ name }) => name);
+  if (genres.length > 2) {
+    const limitedGenres: string = genresList.slice(0, 2).join(', ');
+    return limitedGenres + ', Other';
+  } else {
+    return genres.length > 0 ? genresList.join(', ') : 'Genre unknown';
+  }
+}
 
-// if (item.genre_ids.length > 3) {
-//   item.genre_ids.splice(0, 2);
-// }
-// console.log(genresList);
-// console.log(item);
-// const cityId = genresList.genres.find((genre: any) => genre.id === item.genre_ids[0]).name;
-// console.log(cityId);
-// item.genre_ids[item.genre_ids.length - 1] = 'Other';
-// console.log(item.genre_ids.join(',  '));
-
-// const newMoviesList: any = {
-//   id: '',
-//   title: '',
-//   posterSrc: '',
-//   releaseDate: '',
-//   genres: '',
-// };
+export { createNewMoviesList, createNewMoviesDetails };
