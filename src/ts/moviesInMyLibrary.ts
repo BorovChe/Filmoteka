@@ -59,7 +59,6 @@ async function onClickQueueBtn() {
 }
 
 function sliceMoviesForPagination(moviesList: any) {
-  console.log(moviesList);
   if (moviesList.length > 20) {
     paginationRef?.classList.remove('hidden');
     const slice = moviesList.slice(0, 20);

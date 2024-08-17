@@ -1,9 +1,9 @@
-function findIndexMovie(movielist: any, targetId: any) {
-  return movielist.findIndex(({ id }: any) => String(id) === targetId);
+function findIndexMovie(movielist: any, id: any) {
+  return movielist.findIndex((item: any) => String(item) === id);
 }
 
-function someFunctionMovie(movielist: any, string: any) {
-  return movielist.some(({ id }: any) => String(id) === string);
+function someFunctionMovie(movielist: any, id: any) {
+  return movielist.some((item: any) => String(item) === id);
 }
 
 export { findIndexMovie, someFunctionMovie };

@@ -28,6 +28,7 @@ function onClickQueueBtn(movie: NewMovie, targetId: string, btnRef: HTMLElement 
     btnRef.textContent = 'add to Queue';
 
     const index = findIndexMovie(queueList, targetId);
+    console.log(index);
     queueList.splice(index, 1);
     setDataFromLocalSrorage('queueListMovies', queueList);
   } else if (btnRef) {
