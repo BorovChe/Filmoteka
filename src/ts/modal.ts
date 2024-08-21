@@ -28,8 +28,7 @@ let movieDetails = {} as NewDetails;
 async function onClickMovieItem(e: any): Promise<void> {
   const li = e.target.closest('li');
   if (!li) return;
-  const id = li.dataset.id;
-  movieId.id = id;
+  movieId.id = li.dataset.id;
 
   movieDetails = await getMovieDetails(movieId.id);
 
@@ -39,8 +38,8 @@ async function onClickMovieItem(e: any): Promise<void> {
   btnRefs.watched = document.querySelector('.js-btn-watched');
   btnRefs.queue = document.querySelector('.js-btn-queue');
 
-  watchedMovieAdditionCheck(btnRefs.watched, id);
-  queueMovieAdditionCheck(btnRefs.queue, id);
+  watchedMovieAdditionCheck(btnRefs.watched, movieId.id);
+  queueMovieAdditionCheck(btnRefs.queue, movieId.id);
 }
 
 function onClickCloseBtn(): void {
@@ -49,10 +48,10 @@ function onClickCloseBtn(): void {
 
 function onClickBackdrop(e: Event): void {
   if (e.target === btnRefs.watched) {
-    onClickWacthedBtn(movieId, btnRefs.watched);
+    onClickWacthedBtn(btnRefs.watched, movieId);
   }
   if (e.target === btnRefs.queue) {
-    onClickQueueBtn(movieId, btnRefs.queue);
+    onClickQueueBtn(btnRefs.queue, movieId);
   }
   if (e.currentTarget === e.target) {
     onCloseModal();

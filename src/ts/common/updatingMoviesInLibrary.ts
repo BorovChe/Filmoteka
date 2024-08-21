@@ -5,7 +5,7 @@ import { setDataFromLocalSrorage, getDataFromLocalStorage } from 'ts/localStorag
 const watchedList: ListIdsMoviesFromStorage[] = getDataFromLocalStorage('watchedListMovies');
 const queueList: ListIdsMoviesFromStorage[] = getDataFromLocalStorage('queueListMovies');
 
-function onClickWacthedBtn(movieId: ListIdsMoviesFromStorage, btnRef: HTMLElement | null): void {
+function onClickWacthedBtn(btnRef: HTMLElement | null, movieId: ListIdsMoviesFromStorage): void {
   if (btnRef?.textContent === 'remove to Watched') {
     btnRef.classList.remove('modal-library-btn-active');
     btnRef.textContent = 'add to Watched';
@@ -16,13 +16,13 @@ function onClickWacthedBtn(movieId: ListIdsMoviesFromStorage, btnRef: HTMLElemen
   } else {
     btnRef!.textContent = 'remove to Watched';
     btnRef!.classList.add('modal-library-btn-active');
-    watchedList.push(movieId);
 
+    watchedList.push(movieId);
     setDataFromLocalSrorage('watchedListMovies', watchedList);
   }
 }
 
-function onClickQueueBtn(movieId: ListIdsMoviesFromStorage, btnRef: HTMLElement | null): void {
+function onClickQueueBtn(btnRef: HTMLElement | null, movieId: ListIdsMoviesFromStorage): void {
   if (btnRef?.textContent === 'remove to Queue') {
     btnRef.classList.remove('modal-library-btn-active');
     btnRef.textContent = 'add to Queue';
