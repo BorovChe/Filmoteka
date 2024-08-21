@@ -1,70 +1,77 @@
-import { headerLinkRefs, moviesListRefs, btnLibraryMoviesRefs, paginationRef } from './common/refs';
+import { headerLinkRefs, moviesListRefs, btnLibraryMoviesRefs } from './common/refs';
 import { getDataFromLocalStorage } from './localStorage/localStorageController';
-import { initPagination, paginationSettings } from './helpers/pagination';
-import { libraryMoviesListRender } from './common/render/moviesListRender';
-import { getMovieDetails } from './apiService/moviesAPIService';
+import { checkingForLibraryMoviesAndRender } from './helpers/checkingForMovies';
+import { movieListStubTitles } from './helpers/movieListStubTitles';
+import { initPagination, paginationSettings } from './common/pagination/pagination';
+import { getMoviesListOnLibrary } from './helpers/getPromiseSettled';
 
-const watchedList: any = getDataFromLocalStorage('watchedListMovies');
-const queueList = getDataFromLocalStorage('queueListMovies');
+import { NewMovie } from './helpers/interfaces/movies';
 
-let moviesList: any = [];
+const watchedList: NewMovie[] = getDataFromLocalStorage('watchedListMovies');
+const queueList: NewMovie[] = getDataFromLocalStorage('queueListMovies');
 
-btnLibraryMoviesRefs.watchedBtn?.addEventListener('click', onClickWatchedBtn);
-btnLibraryMoviesRefs.queueBtn?.addEventListener('click', onClickQueueBtn);
+btnLibraryMoviesRefs.watchedBtn.addEventListener('click', onClickWatchedBtn);
+btnLibraryMoviesRefs.queueBtn.addEventListener('click', onClickQueueBtn);
 
-async function libraryMoviesRender() {
+async function libraryMoviesRender(): Promise<void> {
   paginationSettings.moviesType = 'WATCHED_MOVIES';
 
-  headerLinkRefs.library?.classList.add('header-link-active');
-  btnLibraryMoviesRefs.watchedBtn?.classList.add('active-movie-list');
-  try {
-    const promises = watchedList.map((item: any) => getMovieDetails(item));
-    moviesList = await Promise.allSettled(promises);
+  headerLinkRefs.library.classList.add('header-link-active');
+  btnLibraryMoviesRefs.watchedBtn.classList.add('active-movie-list');
 
-    sliceMoviesForPagination(moviesList);
-  } catch (error) {
-    console.log(error);
-  }
+  const sliceMovies = sliceMoviesForPagination(watchedList);
+  checkingForLibraryMoviesAndRender(
+    moviesListRefs.libraryMoviesList,
+    await getMoviesListOnLibrary(sliceMovies),
+    movieListStubTitles.watched,
+    watchedList.length
+  );
 
   initPagination({ page: 1, itemsPerPage: 20, totalItems: watchedList.length });
 }
 
 libraryMoviesRender();
 
-async function onClickWatchedBtn() {
+async function onClickWatchedBtn(): Promise<void> {
   paginationSettings.moviesType = 'WATCHED_MOVIES';
 
-  btnLibraryMoviesRefs.queueBtn?.classList.remove('active-movie-list');
-  btnLibraryMoviesRefs.watchedBtn?.classList.add('active-movie-list');
+  btnLibraryMoviesRefs.queueBtn.classList.remove('active-movie-list');
+  btnLibraryMoviesRefs.watchedBtn.classList.add('active-movie-list');
 
-  const promises = watchedList.map((item: any) => getMovieDetails(item));
-  moviesList = await Promise.allSettled(promises);
+  const sliceMovies = sliceMoviesForPagination(watchedList);
 
-  sliceMoviesForPagination(moviesList);
+  checkingForLibraryMoviesAndRender(
+    moviesListRefs.libraryMoviesList,
+    await getMoviesListOnLibrary(sliceMovies),
+    movieListStubTitles.watched,
+    watchedList.length
+  );
 
   initPagination({ page: 1, itemsPerPage: 20, totalItems: watchedList.length });
 }
 
-async function onClickQueueBtn() {
+async function onClickQueueBtn(): Promise<void> {
   paginationSettings.moviesType = 'QUEUE_MOVIES';
-  btnLibraryMoviesRefs.watchedBtn?.classList.remove('active-movie-list');
-  btnLibraryMoviesRefs.queueBtn?.classList.add('active-movie-list');
 
-  const promises = watchedList.map((item: any) => getMovieDetails(item));
-  moviesList = await Promise.allSettled(promises);
+  btnLibraryMoviesRefs.watchedBtn.classList.remove('active-movie-list');
+  btnLibraryMoviesRefs.queueBtn.classList.add('active-movie-list');
 
-  sliceMoviesForPagination(moviesList);
+  const sliceMovies = sliceMoviesForPagination(queueList);
+  checkingForLibraryMoviesAndRender(
+    moviesListRefs.libraryMoviesList,
+    await getMoviesListOnLibrary(sliceMovies),
+    movieListStubTitles.queue,
+    queueList.length
+  );
 
-  initPagination({ page: 1, itemsPerPage: 20, totalItems: queueList.length - 1 });
+  initPagination({ page: 1, itemsPerPage: 20, totalItems: queueList.length });
 }
 
-function sliceMoviesForPagination(moviesList: any) {
-  if (moviesList.length > 20) {
-    paginationRef?.classList.remove('hidden');
+function sliceMoviesForPagination(moviesList: NewMovie[]): NewMovie[] {
+  if (moviesList.length >= 20) {
     const slice = moviesList.slice(0, 20);
-    libraryMoviesListRender(moviesListRefs.libraryMoviesList, slice);
+    return slice;
   } else {
-    paginationRef?.classList.add('hidden');
-    libraryMoviesListRender(moviesListRefs.libraryMoviesList, moviesList);
+    return moviesList;
   }
 }

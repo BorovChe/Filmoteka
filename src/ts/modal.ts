@@ -12,75 +12,71 @@ import {
 import { BtnLibraryRefsInModal } from './helpers/interfaces/domRefsIntarfaces';
 import { NewDetails } from './helpers/interfaces/movies';
 
-moviesListRefs.generalMoviesList?.addEventListener('click', onClickMovieItem);
-modalRefs.backdrop?.addEventListener('click', onClickBackdrop);
-modalRefs.closeModalBtn?.addEventListener('click', onClickCloseBtn);
+moviesListRefs.generalMoviesList.addEventListener('click', onClickMovieItem);
+modalRefs.backdrop.addEventListener('click', onClickBackdrop);
+modalRefs.closeModalBtn.addEventListener('click', onClickCloseBtn);
 
 const btnRefs: BtnLibraryRefsInModal = {
   watched: null,
   queue: null,
 };
 
-let movieId: string = '';
+let movieId = {} as { id: string };
 
 let movieDetails = {} as NewDetails;
 
-async function onClickMovieItem(e: any) {
+async function onClickMovieItem(e: any): Promise<void> {
   const li = e.target.closest('li');
   if (!li) return;
+  const id = li.dataset.id;
+  movieId.id = id;
 
-  movieId = li.dataset.id;
+  movieDetails = await getMovieDetails(movieId.id);
 
-  try {
-    movieDetails = await getMovieDetails(movieId);
+  movieDetailsRender(modalRefs.movieDetailsContainer, movieDetails);
+  onOpenModal();
 
-    movieDetailsRender(modalRefs.movieDetailsContainer, movieDetails);
-    onOpenModal();
+  btnRefs.watched = document.querySelector('.js-btn-watched');
+  btnRefs.queue = document.querySelector('.js-btn-queue');
 
-    btnRefs.watched = document.querySelector('.js-btn-watched');
-    btnRefs.queue = document.querySelector('.js-btn-queue');
-
-    watchedMovieAdditionCheck(btnRefs.watched, movieId);
-    queueMovieAdditionCheck(btnRefs.queue, movieId);
-  } catch (error) {
-    console.log(error);
-  }
+  watchedMovieAdditionCheck(btnRefs.watched, id);
+  queueMovieAdditionCheck(btnRefs.queue, id);
 }
 
-function onClickCloseBtn() {
+function onClickCloseBtn(): void {
   onCloseModal();
 }
 
-function onClickBackdrop(e: any) {
+function onClickBackdrop(e: Event): void {
   if (e.target === btnRefs.watched) {
-    onClickWacthedBtn(movieDetails, movieId, btnRefs.watched);
+    onClickWacthedBtn(movieId, btnRefs.watched);
   }
   if (e.target === btnRefs.queue) {
-    onClickQueueBtn(movieDetails, movieId, btnRefs.queue);
+    onClickQueueBtn(movieId, btnRefs.queue);
   }
   if (e.currentTarget === e.target) {
     onCloseModal();
   }
 }
 
-function onOpenModal() {
+function onOpenModal(): void {
   window.addEventListener('keydown', onEscKeyDown);
   toggleClassListBody();
   disableScroll();
 }
 
-function onCloseModal() {
+function onCloseModal(): void {
   window.removeEventListener('keydown', onEscKeyDown);
   toggleClassListBody();
   enableScroll();
 }
 
-function onEscKeyDown(e: any) {
+function onEscKeyDown(e: KeyboardEvent): void {
   if (e.code === 'Escape') onCloseModal();
 }
 
-function toggleClassListBody() {
-  bodyRef!.classList.toggle('show-modal');
+function toggleClassListBody(): void {
+  bodyRef.classList.toggle('show-modal');
 }
 
 export { onCloseModal };

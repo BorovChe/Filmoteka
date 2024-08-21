@@ -171,11 +171,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 184px;
   gap: 8px;
 
   @include tablet {
+    margin: 0;
+    max-width: 233px;
+
     justify-content: flex-start;
     gap: 16px;
+  }
+
+  @include desk {
+    max-width: 360px;
   }
 }
 

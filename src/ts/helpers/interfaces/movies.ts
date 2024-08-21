@@ -30,6 +30,21 @@ interface NewMovie {
   posterSrc: string;
   releaseDate: string;
   title: string;
+  value?: NewDetails;
+}
+
+interface Details {
+  id: string;
+  backdrop_path: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  title: string;
+  genres: Genre[];
+  release_date: string;
+  vote_average: number;
+  vote_count: number;
 }
 
 interface NewDetails {
@@ -44,4 +59,8 @@ interface NewDetails {
   about: string;
 }
 
-export { Genre, Movie, NewMovie, NewDetails };
+interface ListIdsMoviesFromStorage {
+  id: string;
+}
+
+export { Genre, Movie, NewMovie, Details, NewDetails, ListIdsMoviesFromStorage };

@@ -1,7 +1,10 @@
 import { searchFormRef, moviesListRefs } from './common/refs';
+import { checkingForMoviesAndRender } from './helpers/checkingForMovies';
 import { getSearchMovies } from './apiService/moviesAPIService';
-import { paginationSettings } from './helpers/pagination';
-import { moviesListRender } from './common/render/moviesListRender';
+import { movieListStubTitles } from './helpers/movieListStubTitles';
+import { paginationSettings } from './common/pagination/pagination';
+import { Notify } from 'notiflix';
+import { settingsNotify } from './helpers/notificationSetting';
 
 import { NewMovie } from './helpers/interfaces/movies';
 
@@ -9,21 +12,18 @@ searchFormRef?.addEventListener('submit', onSubmit);
 
 async function onSubmit(e: any): Promise<void> {
   e.preventDefault();
+  paginationSettings.moviesType = 'SEARCH_MOVIES';
   const form = e.target;
   const searchValue: string = form.elements.searchMovies.value.trim();
 
-  paginationSettings.moviesType = 'SEARCH_MOVIES';
   paginationSettings.searchQuery = searchValue;
 
   if (searchValue === '') {
-    alert('Введи что то, куда ты бля жмешь');
+    Notify.warning('Please enter the movie title!', settingsNotify);
     return;
   }
-  try {
-    const searchMovies: NewMovie[] = await getSearchMovies(searchValue, paginationSettings.startPage);
-    moviesListRender(moviesListRefs.homeMoviesList, searchMovies);
-  } catch (error) {
-    console.log(error);
-  }
+
+  const searchMovies: NewMovie[] = await getSearchMovies(searchValue, paginationSettings.startPage);
+  checkingForMoviesAndRender(moviesListRefs.homeMoviesList, searchMovies, movieListStubTitles.search);
   form.reset();
 }

@@ -1,9 +1,15 @@
-function findIndexMovie(movielist: any, id: any) {
-  return movielist.findIndex((item: any) => String(item) === id);
+import { ListIdsMoviesFromStorage } from './interfaces/movies';
+
+function findIndexMovie(movielist: ListIdsMoviesFromStorage[], movieId: string): number {
+  return movielist.findIndex(({ id }: ListIdsMoviesFromStorage): boolean => {
+    return id === movieId;
+  });
 }
 
-function someFunctionMovie(movielist: any, id: any) {
-  return movielist.some((item: any) => String(item) === id);
+function someFunctionMovie(movielist: ListIdsMoviesFromStorage[], movieId: string): boolean {
+  return movielist.some(({ id }: ListIdsMoviesFromStorage): boolean => {
+    return id === movieId;
+  });
 }
 
 export { findIndexMovie, someFunctionMovie };

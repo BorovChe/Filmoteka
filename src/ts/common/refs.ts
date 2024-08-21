@@ -1,32 +1,46 @@
 import { HeaderLinkRefs, ModalRefs, MoviesListRefs, BtnLibraryRefs } from 'ts/helpers/interfaces/domRefsIntarfaces';
 
-const bodyRef: HTMLElement | null = document.body;
+const bodyRef: HTMLElement = document.body;
+
+const preloaderRef: HTMLElement = document.getElementById('preloader')!;
 
 const headerLinkRefs: HeaderLinkRefs = {
-  home: document.querySelector('.header-home-link'),
-  library: document.querySelector('.header-library-link'),
+  home: document.querySelector('.header-home-link')!,
+  library: document.querySelector('.header-library-link')!,
 };
 
 const modalRefs: ModalRefs = {
-  closeModalBtn: document.querySelector('.btn-close-modal'),
-  backdrop: document.querySelector('.backdrop'),
-  modal: document.querySelector('.modal'),
-  movieDetailsContainer: document.querySelector('.movieDetailsContainer'),
+  closeModalBtn: document.querySelector('.btn-close-modal')!,
+  backdrop: document.querySelector('.backdrop')!,
+  modal: document.querySelector('.modal')!,
+  movieDetailsContainer: document.querySelector('.movieDetailsContainer')!,
 };
 
 const moviesListRefs: MoviesListRefs = {
-  generalMoviesList: document.querySelector('.movies-list'),
-  homeMoviesList: document.querySelector('.js-trendingMovies-list'),
-  libraryMoviesList: document.querySelector('.js-libraryMovies-list'),
+  generalMoviesList: document.querySelector('.movies-list')!,
+  homeMoviesList: document.querySelector('.js-trendingMovies-list')!,
+  libraryMoviesList: document.querySelector('.js-libraryMovies-list')!,
 };
 
 const btnLibraryMoviesRefs: BtnLibraryRefs = {
-  watchedBtn: document.querySelector('.wached-btn'),
-  queueBtn: document.querySelector('.queue-btn'),
+  watchedBtn: document.querySelector('.wached-btn')!,
+  queueBtn: document.querySelector('.queue-btn')!,
 };
 
-const paginationRef: HTMLElement | null = document.querySelector('.tui-pagination');
+const paginationRef: HTMLDivElement = document.querySelector('.tui-pagination')!;
 
-const searchFormRef = document.querySelector('.js-form') as HTMLFormElement;
+const searchFormRef: HTMLFormElement = document.querySelector('.js-form')!;
 
-export { bodyRef, headerLinkRefs, modalRefs, searchFormRef, moviesListRefs, btnLibraryMoviesRefs, paginationRef };
+const scrollToTopBtnRef: HTMLElement = document.querySelector('.btn-scroll-top ')!;
+
+export {
+  bodyRef,
+  preloaderRef,
+  headerLinkRefs,
+  modalRefs,
+  searchFormRef,
+  moviesListRefs,
+  btnLibraryMoviesRefs,
+  paginationRef,
+  scrollToTopBtnRef,
+};

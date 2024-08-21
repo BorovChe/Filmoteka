@@ -1,11 +1,11 @@
-import { Movie, Genre, NewMovie, NewDetails } from './interfaces/movies';
+import { Movie, Genre, NewMovie, NewDetails, Details } from './interfaces/movies';
 import PosterStub from '../../images/stubs/PosterStub.jpg';
 
-function createNewMoviesList(data: Movie[], genresList?: Genre[]) {
+function createNewMoviesList(data: Movie[], genresList?: Genre[]): NewMovie[] {
   const copyData: Movie[] = [...data];
   const newArr: NewMovie[] = [];
 
-  copyData.map((item: Movie) => {
+  copyData.map((item: Movie): void => {
     const {
       id,
       posterSrc,
@@ -23,7 +23,7 @@ function createNewMoviesList(data: Movie[], genresList?: Genre[]) {
     newMoviesList.id = String(id);
     newMoviesList.title = title || original_title;
     newMoviesList.posterSrc = posterSrc || moviePosterCheck(poster_path, backdrop_path);
-    newMoviesList.releaseDate = releaseDate ? releaseDate : release_date.slice(0, 4);
+    newMoviesList.releaseDate = releaseDate ? releaseDate : release_date !== '' ? release_date.slice(0, 4) : 'No date';
     newMoviesList.genres = createGenresName(genre_ids, genres, genresList);
 
     newArr.push(newMoviesList);
@@ -32,8 +32,8 @@ function createNewMoviesList(data: Movie[], genresList?: Genre[]) {
   return newArr;
 }
 
-function createNewMoviesDetails(details: Movie[]) {
-  const copyDetails: Movie[] = { ...details };
+function createNewMoviesDetails(details: Details): NewDetails {
+  const copyDetails: Details = { ...details };
   const newDetails = {} as NewDetails;
   const {
     id,
@@ -47,7 +47,7 @@ function createNewMoviesDetails(details: Movie[]) {
     release_date,
     vote_average,
     vote_count,
-  }: any = copyDetails;
+  }: Details = copyDetails;
 
   newDetails.id = id;
   newDetails.posterSrc = moviePosterCheck(poster_path, backdrop_path);

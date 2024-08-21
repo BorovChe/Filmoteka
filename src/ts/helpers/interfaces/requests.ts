@@ -1,14 +1,19 @@
-import { GenresList, MoviesList } from './movies';
+import { Genre, Movie, NewDetails } from './movies';
 
 interface GenresRequest {
-  genres: GenresList[];
+  genres: Genre[];
 }
 
 interface MoviesRequest {
   page: number;
-  results: MoviesList[];
+  results: Movie[];
   total_pages: number;
   total_results: number;
 }
 
-export { GenresRequest, MoviesRequest };
+interface PromisesMovieDetails {
+  status: string;
+  value: NewDetails;
+}
+
+export { GenresRequest, MoviesRequest, PromisesMovieDetails };

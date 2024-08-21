@@ -1,24 +1,24 @@
 interface HeaderLinkRefs {
-  home: HTMLElement | null;
-  library: HTMLElement | null;
+  home: HTMLElement;
+  library: HTMLElement;
 }
 
 interface ModalRefs {
-  closeModalBtn: HTMLElement | null;
-  backdrop: HTMLElement | null;
-  modal: HTMLElement | null;
-  movieDetailsContainer: HTMLElement | null;
+  closeModalBtn: HTMLElement;
+  backdrop: HTMLDivElement;
+  modal: HTMLDivElement;
+  movieDetailsContainer: HTMLDivElement;
 }
 
 interface MoviesListRefs {
-  generalMoviesList: HTMLElement | null;
-  homeMoviesList: HTMLElement | null;
-  libraryMoviesList: HTMLDivElement | null;
+  generalMoviesList: HTMLDivElement;
+  homeMoviesList: HTMLDivElement;
+  libraryMoviesList: HTMLDivElement;
 }
 
 interface BtnLibraryRefs {
-  watchedBtn: HTMLElement | null;
-  queueBtn: HTMLElement | null;
+  watchedBtn: HTMLElement;
+  queueBtn: HTMLElement;
 }
 
 interface BtnLibraryRefsInModal {

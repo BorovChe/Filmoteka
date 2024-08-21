@@ -1,10 +1,10 @@
 import { movieDetailsTemplate } from 'ts/templates/templates';
 
-import { ModalRefs } from 'ts/helpers/interfaces/domRefsIntarfaces';
+import { NewDetails } from 'ts/helpers/interfaces/movies';
 
-function movieDetailsRender(modalRef: any, data: any) {
-  modalRef!.innerHTML = '';
-  modalRef?.insertAdjacentHTML('afterbegin', movieDetailsTemplate(data));
+function movieDetailsRender(modalRef: HTMLElement, data: NewDetails) {
+  modalRef.innerHTML = '';
+  modalRef.insertAdjacentHTML('afterbegin', movieDetailsTemplate(data));
 }
 
 export { movieDetailsRender };

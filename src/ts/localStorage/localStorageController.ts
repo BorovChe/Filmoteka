@@ -1,4 +1,4 @@
-function getDataFromLocalStorage(key: string) {
+function getDataFromLocalStorage(key: string): any | [] {
   const data: any = localStorage.getItem(key);
   if (data) {
     return JSON.parse(data);
@@ -6,7 +6,7 @@ function getDataFromLocalStorage(key: string) {
   return [];
 }
 
-function setDataFromLocalSrorage(key: string, data: any) {
+function setDataFromLocalSrorage(key: string, data: any): void {
   localStorage.setItem(key, JSON.stringify(data));
 }
 

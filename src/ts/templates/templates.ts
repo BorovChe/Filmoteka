@@ -1,4 +1,8 @@
-const moviesTemplate = ({ id, title, posterSrc, releaseDate, genres }: any): string => {
+import sprite from '../../images/sprite/sprite.svg';
+
+import { NewDetails, NewMovie } from 'ts/helpers/interfaces/movies';
+
+const moviesTemplate = ({ id, title, posterSrc, releaseDate, genres }: NewMovie): string => {
   return `
         <li data-id=${id} class='movie-item'>
           <img class='movie-img' loading='lazy' src="${posterSrc}"
@@ -10,7 +14,7 @@ const moviesTemplate = ({ id, title, posterSrc, releaseDate, genres }: any): str
       `;
 };
 
-const movieDetailsTemplate = ({ id, posterSrc, vote, votes, popularity, title, genres, about }: any): string => {
+const movieDetailsTemplate = ({ id, posterSrc, vote, votes, popularity, title, genres, about }: NewDetails): string => {
   return `
     <img class='details-poster' loading='lazy' src="${posterSrc}" alt="" />
     <div>
@@ -41,4 +45,18 @@ const movieDetailsTemplate = ({ id, posterSrc, vote, votes, popularity, title, g
        `;
 };
 
-export { moviesTemplate, movieDetailsTemplate };
+const moviesListStub = (warningText: string): string => {
+  return `
+  <div class='stub-block'>
+  <h2 class='stub-title' >${warningText}</h2>
+  <img class='stub-gif' width='400px' src="https://i.gifer.com/1FaK.gif" alt="stub movies gif" />
+  <a class='link-back' href="../../index.html">
+   <svg class="link-back-icon" width="14" height="14">
+        <use href="${sprite}#arrow-left"></use>
+      </svg>
+  Go to trending movies</a>
+  </div>
+  `;
+};
+
+export { moviesTemplate, movieDetailsTemplate, moviesListStub };
