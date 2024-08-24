@@ -5,7 +5,7 @@ import { movieListStubTitles } from './helpers/movieListStubTitles';
 import { initPagination, paginationSettings } from './common/pagination/pagination';
 import { getMoviesListOnLibrary } from './helpers/getPromiseSettled';
 
-import { NewMovie } from './helpers/interfaces/movies';
+import { NewMovie } from './helpers/types/movies';
 
 const watchedList: NewMovie[] = getDataFromLocalStorage('watchedListMovies');
 const queueList: NewMovie[] = getDataFromLocalStorage('queueListMovies');

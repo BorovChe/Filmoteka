@@ -1,4 +1,4 @@
-import { Movie, Genre, NewMovie, NewDetails, Details } from './interfaces/movies';
+import { Movie, Genre, NewMovie, NewDetails, Details } from './types/movies';
 import PosterStub from '../../images/stubs/PosterStub.jpg';
 
 function createNewMoviesList(data: Movie[], genresList?: Genre[]): NewMovie[] {

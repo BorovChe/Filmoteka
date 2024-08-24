@@ -1,4 +1,4 @@
-import { HeaderLinkRefs, ModalRefs, MoviesListRefs, BtnLibraryRefs } from 'ts/helpers/interfaces/domRefsIntarfaces';
+import { HeaderLinkRefs, ModalRefs, MoviesListRefs, BtnLibraryRefs } from 'ts/helpers/types/domRefsIntarfaces';
 
 const bodyRef: HTMLElement = document.body;
 

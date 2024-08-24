@@ -3,7 +3,7 @@ import { moviesListRender } from 'ts/common/render/moviesListRender';
 import { moviesListStub } from '../templates/templates';
 import { totalPages } from 'ts/apiService/moviesAPIService';
 
-import { NewMovie } from './interfaces/movies';
+import { NewMovie } from './types/movies';
 
 function checkingForMoviesAndRender(listMoviesRef: HTMLElement, listMovies: NewMovie[], stubTitle: string): void {
   if (listMovies.length === 0) {

@@ -1,4 +1,4 @@
-import { MovieListStubTitles } from './interfaces/helpers';
+import { MovieListStubTitles } from './types/helpers';
 
 const movieListStubTitles: MovieListStubTitles = {
   search: 'Unfortunately, no movies were found for your request, try finding another one or go back',

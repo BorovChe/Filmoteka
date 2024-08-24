@@ -4,7 +4,7 @@ import { getTrendingMovies } from './apiService/moviesAPIService';
 import { movieListStubTitles } from './helpers/movieListStubTitles';
 import { paginationSettings } from './common/pagination/pagination';
 
-import { NewMovie } from './helpers/interfaces/movies';
+import { NewMovie } from './helpers/types/movies';
 
 async function getTrendingMoviesAndUpdateUI(renderPage: number): Promise<void> {
   headerLinkRefs.home.classList.add('header-link-active');

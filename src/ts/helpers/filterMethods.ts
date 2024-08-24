@@ -1,4 +1,4 @@
-import { ListIdsMoviesFromStorage } from './interfaces/movies';
+import { ListIdsMoviesFromStorage } from './types/movies';
 
 function findIndexMovie(movielist: ListIdsMoviesFromStorage[], movieId: string): number {
   return movielist.findIndex(({ id }: ListIdsMoviesFromStorage): boolean => {

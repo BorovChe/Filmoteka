@@ -1,6 +1,6 @@
 import sprite from '../../images/sprite/sprite.svg';
 
-import { NewDetails, NewMovie } from 'ts/helpers/interfaces/movies';
+import { NewDetails, NewMovie } from 'ts/helpers/types/movies';
 
 const moviesTemplate = ({ id, title, posterSrc, releaseDate, genres }: NewMovie): string => {
   return `

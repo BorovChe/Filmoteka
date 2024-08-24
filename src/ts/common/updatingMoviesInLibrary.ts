@@ -1,11 +1,12 @@
 import { findIndexMovie, someFunctionMovie } from 'ts/helpers/filterMethods';
-import { ListIdsMoviesFromStorage } from 'ts/helpers/interfaces/movies';
+import { ListIdsMoviesFromStorage } from 'ts/helpers/types/movies';
 import { setDataFromLocalSrorage, getDataFromLocalStorage } from 'ts/localStorage/localStorageController';
 
 const watchedList: ListIdsMoviesFromStorage[] = getDataFromLocalStorage('watchedListMovies');
 const queueList: ListIdsMoviesFromStorage[] = getDataFromLocalStorage('queueListMovies');
 
 function onClickWacthedBtn(btnRef: HTMLElement | null, movieId: ListIdsMoviesFromStorage): void {
+  console.log(movieId);
   if (btnRef?.textContent === 'remove to Watched') {
     btnRef.classList.remove('modal-library-btn-active');
     btnRef.textContent = 'add to Watched';

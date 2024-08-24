@@ -6,7 +6,7 @@ import { paginationSettings } from './common/pagination/pagination';
 import { Notify } from 'notiflix';
 import { settingsNotify } from './helpers/notificationSetting';
 
-import { NewMovie } from './helpers/interfaces/movies';
+import { NewMovie } from './helpers/types/movies';
 
 searchFormRef?.addEventListener('submit', onSubmit);
 

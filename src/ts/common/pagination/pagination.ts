@@ -10,8 +10,8 @@ import { moviesListRender } from '../render/moviesListRender';
 import { scrollToTop } from 'ts/helpers/scroll/backToTop';
 import { getMoviesListOnLibrary } from 'ts/helpers/getPromiseSettled';
 
-import { PaginationInit, PaginationSetting } from 'ts/helpers/interfaces/pagination';
-import { NewDetails } from 'ts/helpers/interfaces/movies';
+import { PaginationInit, PaginationSetting } from 'ts/helpers/types/pagination';
+import { NewDetails } from 'ts/helpers/types/movies';
 
 const paginationSettings: PaginationSetting = {
   startPage: 1,
@@ -20,7 +20,7 @@ const paginationSettings: PaginationSetting = {
   searchQuery: '',
 };
 
-function initPagination({ page, itemsPerPage, totalItems }: PaginationInit) {
+function initPagination(page: number, itemsPerPage: number, totalItems: number) {
   const options = {
     page,
     itemsPerPage,

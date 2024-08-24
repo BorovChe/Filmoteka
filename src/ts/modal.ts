@@ -1,6 +1,6 @@
 import { bodyRef, modalRefs, moviesListRefs } from './common/refs';
 import { getMovieDetails } from './apiService/moviesAPIService';
-import { disableScroll, enableScroll } from './helpers/scroll/disableScroll';
+import { disableScroll, enableScroll } from './helpers/scroll/controllersScroll';
 import { movieDetailsRender } from './common/render/movieDetailsRender';
 import {
   onClickWacthedBtn,
@@ -9,8 +9,8 @@ import {
   queueMovieAdditionCheck,
 } from './common/updatingMoviesInLibrary';
 
-import { BtnLibraryRefsInModal } from './helpers/interfaces/domRefsIntarfaces';
-import { NewDetails } from './helpers/interfaces/movies';
+import { BtnLibraryRefsInModal } from './helpers/types/domRefsIntarfaces';
+import { NewDetails } from './helpers/types/movies';
 
 moviesListRefs.generalMoviesList.addEventListener('click', onClickMovieItem);
 modalRefs.backdrop.addEventListener('click', onClickBackdrop);
@@ -29,7 +29,7 @@ async function onClickMovieItem(e: any): Promise<void> {
   const li = e.target.closest('li');
   if (!li) return;
   movieId.id = li.dataset.id;
-
+  console.log(movieId);
   movieDetails = await getMovieDetails(movieId.id);
 
   movieDetailsRender(modalRefs.movieDetailsContainer, movieDetails);

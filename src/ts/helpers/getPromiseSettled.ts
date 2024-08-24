@@ -1,6 +1,6 @@
 import { getMovieDetails } from 'ts/apiService/moviesAPIService';
 
-import { NewMovie, ListIdsMoviesFromStorage } from './interfaces/movies';
+import { NewMovie, ListIdsMoviesFromStorage } from './types/movies';
 
 function getMoviesListOnLibrary(listMovies: NewMovie[]): Promise<any> {
   const promises: Promise<NewMovie>[] = listMovies.map(
