@@ -1,7 +1,7 @@
 import { Details, Genre, Movie, NewDetails } from './movies';
 import { AxiosHeaders } from 'axios';
 
-type ResponseDataType = GenresResponse & Movie & MoviesResponse & Details;
+type ResponseDataType = GenresResponse & MoviesResponse & Details;
 
 type IApiResponse = {
   config: string;
