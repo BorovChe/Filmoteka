@@ -24,7 +24,7 @@
   }
 }
 
-.loader {
+.pre-loader-container {
   width: 20em;
   height: 20em;
   font-size: 10px;
@@ -44,14 +44,14 @@
   }
 }
 
-.loader .face {
+.pre-loader-container .face {
   position: absolute;
   border-radius: 50%;
   border-style: solid;
   animation: animate 3s linear infinite;
 }
 
-.loader .face:nth-child(1) {
+.pre-loader-container .face:nth-child(1) {
   width: 100%;
   height: 100%;
   color: rgb(255, 136, 0);
@@ -61,7 +61,7 @@
   animation-direction: normal;
 }
 
-.loader .face:nth-child(2) {
+.pre-loader-container .face:nth-child(2) {
   width: 70%;
   height: 70%;
   color: gold;
@@ -72,7 +72,7 @@
   animation-direction: reverse;
 }
 
-.loader .face .circle {
+.pre-loader-container .face .circle {
   position: absolute;
   width: 50%;
   height: 0.1em;
@@ -83,7 +83,7 @@
   transform-origin: left;
 }
 
-.loader .face .circle::before {
+.pre-loader-container .face .circle::before {
   position: absolute;
   top: -0.5em;
   right: -0.5em;

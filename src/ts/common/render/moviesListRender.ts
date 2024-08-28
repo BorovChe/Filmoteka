@@ -1,6 +1,6 @@
 import { moviesTemplate } from 'ts/templates/templates';
 
-import { NewMovie } from 'ts/helpers/types/movies';
+import { NewMovie } from 'ts/types/movies';
 
 function moviesListRender(listRef: HTMLElement, data: NewMovie[]): void {
   listRef!.innerHTML = '';

@@ -1,4 +1,4 @@
-import { preloaderRef } from './refs';
+import { preloaderRef } from '../refs';
 import { disableScroll, enableScroll } from 'ts/helpers/scroll/controllersScroll';
 
 disableScroll();

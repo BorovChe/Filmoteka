@@ -5,26 +5,24 @@ import 'tui-pagination/dist/tui-pagination.css';
 import { paginationRef } from '../refs';
 import { moviesListRefs } from '../refs';
 import { getTrendingMovies, getSearchMovies } from '../../apiService/moviesAPIService';
-import { getDataFromLocalStorage } from '../../localStorage/localStorageController';
+import { getDataFromLocalStorage } from '../../storage/localStorage/localStorageController';
 import { moviesListRender } from '../render/moviesListRender';
 import { scrollToTop } from 'ts/helpers/scroll/backToTop';
 import { getMoviesListOnLibrary } from 'ts/helpers/getPromiseSettled';
 
-import { PaginationInit, PaginationSetting } from 'ts/helpers/types/pagination';
-import { NewDetails } from 'ts/helpers/types/movies';
-
-const paginationSettings: PaginationSetting = {
-  startPage: 1,
-  moviesType: '',
-  totalItemsHome: 0,
-  searchQuery: '',
-};
+import { NewDetails, NewMovie } from 'ts/types/movies';
+import { getDataFromSessionStorage } from 'ts/storage/sessionStorage/sessionStorageController';
+import { ICurrentPage } from 'ts/types/helpers';
+import { updateCurrentPageFromPagination } from './paginationHelpers';
+import { createLibraryPage } from 'ts/library/createPageForLibrary';
 
 function initPagination(page: number, itemsPerPage: number, totalItems: number) {
+  const currentPage = getDataFromSessionStorage<ICurrentPage>('currentSetPagination')!;
+
   const options = {
     page,
-    itemsPerPage,
     totalItems,
+    itemsPerPage,
     visiblePages: 5,
     centerAlign: true,
     firstItemClassName: 'tui-first-child',
@@ -45,28 +43,35 @@ function initPagination(page: number, itemsPerPage: number, totalItems: number) 
 
   const pagination = new Pagination(paginationRef, options);
 
-  pagination.on('afterMove', async ({ page }: any): Promise<void> => {
-    if (paginationSettings.moviesType === 'TRENDING_MOVIES') {
-      const trendingMovies = await getTrendingMovies(page);
+  pagination.on('beforeMove', async ({ page }: any): Promise<void> => {
+    if (currentPage.type === 'TRENDING_MOVIES') {
+      updateCurrentPageFromPagination(currentPage, page);
+
+      const trendingMovies: NewMovie[] = await getTrendingMovies(page);
       moviesListRender(moviesListRefs.homeMoviesList, trendingMovies);
     }
 
-    if (paginationSettings.moviesType === 'SEARCH_MOVIES') {
-      const searchMovies = await getSearchMovies(paginationSettings.searchQuery, page);
+    if (currentPage.type === 'SEARCH_MOVIES') {
+      updateCurrentPageFromPagination(currentPage, page);
+
+      const searchMovies: NewMovie[] = await getSearchMovies(currentPage.query, page);
       moviesListRender(moviesListRefs.homeMoviesList, searchMovies);
     }
 
-    const watchedList = getDataFromLocalStorage('watchedListMovies');
-    if (paginationSettings.moviesType === 'WATCHED_MOVIES') {
-      const staticPage = createStaticPage(watchedList, itemsPerPage, page);
+    const watchedList = getDataFromLocalStorage<NewDetails[]>('watchedListMovies');
+    const queueList = getDataFromLocalStorage<NewDetails[]>('queueListMovies');
 
+    if (currentPage.type === 'WATCHED_MOVIES') {
+      updateCurrentPageFromPagination(currentPage, page);
+
+      const staticPage: NewDetails[] = createLibraryPage(watchedList, page, itemsPerPage);
       moviesListRender(moviesListRefs.libraryMoviesList, await getMoviesListOnLibrary(staticPage));
     }
 
-    const queueList = getDataFromLocalStorage('queueListMovies');
-    if (paginationSettings.moviesType === 'QUEUE_MOVIES') {
-      const staticPage = createStaticPage(queueList, itemsPerPage, page);
+    if (currentPage.type === 'QUEUE_MOVIES') {
+      updateCurrentPageFromPagination(currentPage, page);
 
+      const staticPage: NewDetails[] = createLibraryPage(queueList, page, itemsPerPage);
       moviesListRender(moviesListRefs.libraryMoviesList, await getMoviesListOnLibrary(staticPage));
     }
 
@@ -74,11 +79,4 @@ function initPagination(page: number, itemsPerPage: number, totalItems: number) 
   });
 }
 
-function createStaticPage(moviesList: NewDetails[], page: number, itemsPerPage: number): NewDetails[] {
-  let start = (page - 1) * itemsPerPage;
-  let end = start + itemsPerPage;
-  const slice = moviesList.slice(start, end);
-  return slice;
-}
-
-export { initPagination, paginationSettings };
+export { initPagination };

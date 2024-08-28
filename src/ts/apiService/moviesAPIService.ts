@@ -3,53 +3,59 @@ import { getData } from './requestMiddleware';
 import { createNewMoviesDetails, createNewMoviesList } from 'ts/helpers/formattedData';
 import { initPagination } from 'ts/common/pagination/pagination';
 
-import { GenresResponse, IApiResponse, MoviesResponse } from 'ts/helpers/types/responses';
-import { Details, Genre, Movie, NewDetails, NewMovie } from 'ts/helpers/types/movies';
+import { GenresResponse, MoviesResponse } from 'ts/types/responses';
+import { Details, Genre, NewDetails, NewMovie } from 'ts/types/movies';
+import { IQueryParams } from 'ts/types/helpers';
 
 let genres_list: Genre[] = [];
 let totalPages: number = 0;
+const checkingListGenres: boolean = Boolean(genres_list.length);
 
 const getGenresMovie = async (): Promise<Genre[]> => {
-  const { genres }: GenresResponse = await getData(`3/genre/movie/list?language=en-US`);
-  return genres as Genre[];
+  const { genres } = await getData<GenresResponse>(`3/genre/movie/list?language=en-US`);
+  return genres;
 };
 
-const getTrendingMovies = async (pageNumber: number): Promise<NewMovie[]> => {
-  const response: MoviesResponse = await getData(`3/trending/movie/day?language=en-US&page=${pageNumber}`);
-  if (genres_list.length <= 0) {
+const getTrendingMovies = async (pageNum: number): Promise<NewMovie[]> => {
+  const data = await getData<MoviesResponse>(`3/trending/movie/day?language=en-US&page=${pageNum}`);
+  if (!checkingListGenres) {
     const genres: Genre[] = await getGenresMovie();
-
     genres_list = genres;
   }
 
-  const { page, results, total_pages, total_results }: MoviesResponse = response;
-  totalPages = total_pages;
-  const newMoviesList: NewMovie[] = createNewMoviesList(results, genres_list);
+  const { page, results, total_pages }: MoviesResponse = data;
 
-  initPagination(page, results.length, total_results);
+  totalPages = total_pages;
+  initPagination(page, results.length, 10000);
+
+  const newMoviesList: NewMovie[] = createNewMoviesList(results, genres_list);
   return newMoviesList;
 };
 
-const getSearchMovies = async (value: string, pageNumber: number): Promise<NewMovie[]> => {
-  const { data }: MoviesResponse = await getData(
-    `3/search/movie?query=${value}&include_adult=false&language=en-US&page=${pageNumber}`
+const getSearchMovies = async (value: string, pageNum: number): Promise<NewMovie[]> => {
+  const queryParam: IQueryParams = { searchValue: value, pageNumber: pageNum };
+
+  const data = await getData<MoviesResponse>(
+    `3/search/movie?query=${queryParam.searchValue}&include_adult=false&language=en-US&page=${queryParam.pageNumber}`
   );
-  if (genres_list.length <= 0) {
+  if (!checkingListGenres) {
     const genres: Genre[] = await getGenresMovie();
     genres_list = genres;
   }
 
-  const { page, results, total_pages, total_results } = data;
-  totalPages = total_pages;
-  const newMoviesList: NewMovie[] = createNewMoviesList(results, genres_list);
+  const { page, results, total_pages, total_results }: MoviesResponse = data;
 
+  totalPages = total_pages;
   initPagination(page, results.length, total_results);
+
+  const newMoviesList: NewMovie[] = createNewMoviesList(results, genres_list);
   return newMoviesList;
 };
 
 const getMovieDetails = async (id: string): Promise<NewDetails> => {
-  const response: Details = await getData(`3/movie/${id}?language=en-US`);
-  const createNewDetails: NewDetails = createNewMoviesDetails(response);
+  const data = await getData<Details>(`3/movie/${id}?language=en-US`);
+
+  const createNewDetails: NewDetails = createNewMoviesDetails(data);
   return createNewDetails;
 };
 

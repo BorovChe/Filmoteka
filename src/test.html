@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      #container {
+        max-width: 1200px;
+        margin: 1rem auto;
+        padding: 2rem;
+        border-radius: 1rem;
+
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #f4f4f4;
+      }
+
+      ul {
+        gap: 1rem;
+        padding: 2rem;
+        margin: 0;
+
+        list-style-type: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      li {
+        padding: 2rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        max-width: 350px;
+
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      li:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      li p {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-size: 16px;
+
+        color: #555;
+      }
+
+      ul.empty::before {
+        padding: 20px;
+        font-size: 18px;
+
+        content: 'No posts available.';
+        display: block;
+        color: #888;
+        text-align: center;
+      }
+      /* === */
+      .loading-spinner {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+
+        display: none;
+        position: fixed;
+      }
+
+      .spinner {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+
+        border: 8px solid rgba(0, 0, 0, 0.1);
+        border-top: 8px solid #3498db;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    <main id="container"></main>
+    <script type="module" src="./ts/test.ts"></script>
+  </body>
+</html>

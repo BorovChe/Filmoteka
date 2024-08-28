@@ -1,6 +1,6 @@
-import { MovieListStubTitles } from './types/helpers';
+import { IMovieListStubTitles } from '../types/helpers';
 
-const movieListStubTitles: MovieListStubTitles = {
+const movieListStubTitles: IMovieListStubTitles = {
   search: 'Unfortunately, no movies were found for your request, try finding another one or go back',
   common: 'Sorry, the movie list is empty, try again or go back',
   watched: 'There are no watched movies, please go back to movie lists',

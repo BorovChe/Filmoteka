@@ -1,35 +1,35 @@
-import { bodyRef, modalRefs, moviesListRefs } from './common/refs';
-import { getMovieDetails } from './apiService/moviesAPIService';
-import { disableScroll, enableScroll } from './helpers/scroll/controllersScroll';
-import { movieDetailsRender } from './common/render/movieDetailsRender';
+import { bodyRef, modalRefs, moviesListRefs } from 'ts/common/refs';
+import { getMovieDetails } from 'ts/apiService/moviesAPIService';
+import { disableScroll, enableScroll } from 'ts/helpers/scroll/controllersScroll';
+import { movieDetailsRender } from 'ts/common/render/movieDetailsRender';
 import {
   onClickWacthedBtn,
   onClickQueueBtn,
   watchedMovieAdditionCheck,
   queueMovieAdditionCheck,
-} from './common/updatingMoviesInLibrary';
+} from 'ts/library/updatingMoviesInLibrary';
 
-import { BtnLibraryRefsInModal } from './helpers/types/domRefsIntarfaces';
-import { NewDetails } from './helpers/types/movies';
+import { BtnLibraryRefsInModal } from 'ts/types/domRefsIntarfaces';
+import { ListIdsMoviesFromStorage, NewDetails } from 'ts/types/movies';
 
 moviesListRefs.generalMoviesList.addEventListener('click', onClickMovieItem);
-modalRefs.backdrop.addEventListener('click', onClickBackdrop);
-modalRefs.closeModalBtn.addEventListener('click', onClickCloseBtn);
 
 const btnRefs: BtnLibraryRefsInModal = {
   watched: null,
   queue: null,
 };
 
-let movieId = {} as { id: string };
+let movieId: ListIdsMoviesFromStorage = { id: '' };
 
 let movieDetails = {} as NewDetails;
 
 async function onClickMovieItem(e: any): Promise<void> {
+  modalRefs.backdrop.addEventListener('click', onClickBackdrop);
+  modalRefs.closeModalBtn.addEventListener('click', onClickCloseBtn);
+
   const li = e.target.closest('li');
   if (!li) return;
   movieId.id = li.dataset.id;
-  console.log(movieId);
   movieDetails = await getMovieDetails(movieId.id);
 
   movieDetailsRender(modalRefs.movieDetailsContainer, movieDetails);
@@ -65,7 +65,7 @@ function onOpenModal(): void {
 }
 
 function onCloseModal(): void {
-  window.removeEventListener('keydown', onEscKeyDown);
+  clearEventListeners();
   toggleClassListBody();
   enableScroll();
 }
@@ -76,6 +76,12 @@ function onEscKeyDown(e: KeyboardEvent): void {
 
 function toggleClassListBody(): void {
   bodyRef.classList.toggle('show-modal');
+}
+
+function clearEventListeners(): void {
+  modalRefs.closeModalBtn.addEventListener('click', onClickCloseBtn);
+  modalRefs.backdrop.removeEventListener('click', onClickBackdrop);
+  window.removeEventListener('keydown', onEscKeyDown);
 }
 
 export { onCloseModal };

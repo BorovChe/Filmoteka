@@ -1,6 +1,6 @@
 import sprite from '../../images/sprite/sprite.svg';
 
-import { NewDetails, NewMovie } from 'ts/helpers/types/movies';
+import { NewDetails, NewMovie } from 'ts/types/movies';
 
 const moviesTemplate = ({ id, title, posterSrc, releaseDate, genres }: NewMovie): string => {
   return `
@@ -50,13 +50,14 @@ const moviesListStub = (warningText: string): string => {
   <div class='stub-block'>
   <h2 class='stub-title' >${warningText}</h2>
   <img class='stub-gif' width='400px' src="https://i.gifer.com/1FaK.gif" alt="stub movies gif" />
-  <a class='link-back' href="../src/index.html">
-   <svg class="link-back-icon" width="14" height="14">
-        <use href="${sprite}#arrow-left"></use>
-      </svg>
-  Go to trending movies</a>
   </div>
   `;
 };
 
 export { moviesTemplate, movieDetailsTemplate, moviesListStub };
+
+// <a id='test' class='link-back' href="../src/index.html">
+// <svg class="link-back-icon" width="14" height="14">
+//      <use href="${sprite}#arrow-left"></use>
+//    </svg>
+// Go to trending movies</a>

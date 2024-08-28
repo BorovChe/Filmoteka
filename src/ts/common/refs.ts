@@ -1,4 +1,4 @@
-import { HeaderLinkRefs, ModalRefs, MoviesListRefs, BtnLibraryRefs } from 'ts/helpers/types/domRefsIntarfaces';
+import { HeaderLinkRefs, ModalRefs, MoviesListRefs, BtnLibraryRefs } from 'ts/types/domRefsIntarfaces';
 
 const bodyRef: HTMLElement = document.body;
 
@@ -8,6 +8,8 @@ const headerLinkRefs: HeaderLinkRefs = {
   home: document.querySelector('.header-home-link')!,
   library: document.querySelector('.header-library-link')!,
 };
+
+const logoRef: HTMLElement = document.querySelector('.js-redirectToHome')!;
 
 const modalRefs: ModalRefs = {
   closeModalBtn: document.querySelector('.btn-close-modal')!,
@@ -37,6 +39,7 @@ export {
   bodyRef,
   preloaderRef,
   headerLinkRefs,
+  logoRef,
   modalRefs,
   searchFormRef,
   moviesListRefs,
