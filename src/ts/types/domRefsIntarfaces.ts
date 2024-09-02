@@ -1,29 +1,38 @@
-interface HeaderLinkRefs {
+interface IHeaderLinkRefs {
   home: HTMLElement;
   library: HTMLElement;
 }
 
-interface ModalRefs {
+interface IAuthRefs {
+  authBlock: HTMLDivElement;
+  signUp: HTMLElement;
+  signIn: HTMLElement;
+  signOut: HTMLElement;
+  currentUser: HTMLElement;
+}
+
+interface IModalRefs {
   closeModalBtn: HTMLElement;
   backdrop: HTMLDivElement;
   modal: HTMLDivElement;
-  movieDetailsContainer: HTMLDivElement;
+  modalContainer: HTMLDivElement;
 }
 
-interface MoviesListRefs {
+interface IMoviesListRefs {
   generalMoviesList: HTMLDivElement;
   homeMoviesList: HTMLDivElement;
   libraryMoviesList: HTMLDivElement;
 }
 
-interface BtnLibraryRefs {
+interface IBtnLibraryRefs {
   watchedBtn: HTMLElement;
   queueBtn: HTMLElement;
 }
 
-interface BtnLibraryRefsInModal {
-  watched: HTMLElement | null;
-  queue: HTMLElement | null;
+interface IBtnLibraryRefsInModal {
+  watched: HTMLButtonElement | null;
+  queue: HTMLButtonElement | null;
+  checkedAuth: HTMLElement | null;
 }
 
-export { HeaderLinkRefs, ModalRefs, MoviesListRefs, BtnLibraryRefs, BtnLibraryRefsInModal };
+export { IHeaderLinkRefs, IAuthRefs, IModalRefs, IMoviesListRefs, IBtnLibraryRefs, IBtnLibraryRefsInModal };

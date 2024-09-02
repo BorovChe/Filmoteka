@@ -9,5 +9,5 @@ document.body.onload = function (): void {
       preloaderRef.classList.add('done');
       enableScroll();
     }
-  }, 800);
+  }, 400);
 };

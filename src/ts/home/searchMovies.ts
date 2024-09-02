@@ -5,7 +5,6 @@ import { movieListStubTitles } from '../helpers/movieListStubTitles';
 import { paginationSettings } from 'ts/common/pagination/paginationHelpers';
 import { Notify } from 'notiflix';
 import { settingsNotify } from '../helpers/notificationSetting';
-import { setDataFromLocalSrorage } from '../storage/localStorage/localStorageController';
 
 import { NewMovie } from '../types/movies';
 import { createCurrentPageFromStorage } from 'ts/common/currentPageFromStorage';

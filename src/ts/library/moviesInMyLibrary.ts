@@ -1,4 +1,4 @@
-import { headerLinkRefs, moviesListRefs, btnLibraryMoviesRefs } from '../common/refs';
+import { headerLinkRefs, moviesListRefs, btnLibraryMoviesRefs, authRefs } from '../common/refs';
 import { getDataFromLocalStorage, setDataFromLocalSrorage } from '../storage/localStorage/localStorageController';
 import { checkingForLibraryMoviesAndRender } from '../helpers/checkingForMovies';
 import { movieListStubTitles } from '../helpers/movieListStubTitles';
@@ -17,6 +17,14 @@ const itemsPerPage: number = 20;
 
 btnLibraryMoviesRefs.watchedBtn.addEventListener('click', onClickWatchedBtn);
 btnLibraryMoviesRefs.queueBtn.addEventListener('click', onClickQueueBtn);
+
+function addHeaderCurrentUser() {
+  const user: any = getDataFromLocalStorage('auth');
+  authRefs.currentUser.style.display = 'block';
+  authRefs.currentUser.textContent = user.email;
+}
+
+addHeaderCurrentUser();
 
 async function onClickWatchedBtn(): Promise<void> {
   btnLibraryMoviesRefs.queueBtn.classList.remove('active-movie-list');

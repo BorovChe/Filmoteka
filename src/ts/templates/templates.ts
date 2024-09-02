@@ -1,5 +1,3 @@
-import sprite from '../../images/sprite/sprite.svg';
-
 import { NewDetails, NewMovie } from 'ts/types/movies';
 
 const moviesTemplate = ({ id, title, posterSrc, releaseDate, genres }: NewMovie): string => {
@@ -41,6 +39,7 @@ const movieDetailsTemplate = ({ id, posterSrc, vote, votes, popularity, title, g
           <li><button class='modal-library-btn js-btn-watched' data-id="${id}">add to Watched</button></li>
           <li><button class='modal-library-btn js-btn-queue' data-id="${id}">add to Queue</button></li>
         </ul>
+        <p class='checked-auth'><button type=button class='signIn-btn-inModal'>SignIn</button> or <button type=button class='signUp-btn-inModal'>SignUp</button> to add movies</p>
         </div>
        `;
 };
@@ -55,9 +54,3 @@ const moviesListStub = (warningText: string): string => {
 };
 
 export { moviesTemplate, movieDetailsTemplate, moviesListStub };
-
-// <a id='test' class='link-back' href="../src/index.html">
-// <svg class="link-back-icon" width="14" height="14">
-//      <use href="${sprite}#arrow-left"></use>
-//    </svg>
-// Go to trending movies</a>

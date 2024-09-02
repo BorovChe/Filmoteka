@@ -9,6 +9,8 @@ import { createLibraryPage } from 'ts/library/createPageForLibrary';
 import { ListIdsMoviesFromStorage } from 'ts/types/movies';
 import { ICurrentPage } from 'ts/types/helpers';
 import { getDataFromSessionStorage } from 'ts/storage/sessionStorage/sessionStorageController';
+// import { updateMoviesData, writeMoviesData } from 'ts/firebase/store/store';
+import { get } from 'firebase/database';
 
 const watchedList: ListIdsMoviesFromStorage[] = getDataFromLocalStorage('watchedListMovies');
 const queueList: ListIdsMoviesFromStorage[] = getDataFromLocalStorage('queueListMovies');
@@ -40,6 +42,9 @@ async function onClickWacthedBtn(btnRef: HTMLElement | null, movieId: ListIdsMov
     btnRef!.classList.add('modal-library-btn-active');
 
     watchedList.push(currentId);
+    // writeMoviesData(currentId.id);
+    // updateMoviesData(currentId.id);
+    // await getFirebaseFata();
     setDataFromLocalSrorage('watchedListMovies', watchedList);
 
     if (currentPage.type === 'WATCHED_MOVIES') {

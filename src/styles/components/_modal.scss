@@ -5,11 +5,11 @@ body.show-modal .backdrop {
 }
 
 body.show-modal .modal {
-  transform: translateX(-50%) scale(1);
+  transform: scale(1);
   transition: transform var(--anim-slow);
 
   @include tablet {
-    transform: translateX(-50%) translateY(-50%) scale(1);
+    transform: scale(1);
   }
 }
 
@@ -17,6 +17,10 @@ body.show-modal .modal {
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   position: fixed;
   top: 0;
@@ -32,11 +36,7 @@ body.show-modal .modal {
 }
 
 .modal {
-  position: relative;
-  top: 0;
-  left: 50%;
-  max-width: 394px;
-  padding: 48px 20px 30px 20px;
+  min-width: 320px;
   overflow: auto;
   background-color: $light-color;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 2px 1px rgba(0, 0, 0, 0.2);
@@ -45,14 +45,6 @@ body.show-modal .modal {
   @include tablet {
     top: 50%;
     overflow: visible;
-    max-width: 704px;
-    padding: 40px 36px 40px 36px;
-  }
-
-  @include desk {
-    padding: 40px 4px 40px 4px;
-
-    max-width: 806px;
   }
 }
 

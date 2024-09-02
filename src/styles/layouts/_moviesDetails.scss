@@ -1,11 +1,18 @@
-.movieDetailsContainer {
+.modal-details-container {
+  max-width: 394px;
+  padding: 48px 20px 30px 20px;
+
   @include tablet {
     display: flex;
     gap: 68px;
+    max-width: 704px;
+    padding: 40px 36px 40px 36px;
   }
 
   @include desk {
     gap: 16px;
+    max-width: 806px;
+    padding: 40px 4px 40px 4px;
   }
 }
 
@@ -163,4 +170,8 @@
   color: $light-color;
   box-shadow: 0 0 7px 0 rgba(27, 27, 27, 0.15);
   background: $accent-color;
+}
+
+.checked-auth {
+  display: none;
 }
