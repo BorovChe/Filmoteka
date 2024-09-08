@@ -1,6 +1,7 @@
 import { getDataFromLocalStorage } from 'ts/storage/localStorage/localStorageController';
-import { database } from '../firebaseInit';
+import { auth, database } from '../firebaseInit';
 import { doc, DocumentData, DocumentReference, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const currentUser: any = getDataFromLocalStorage('auth');
 
@@ -8,9 +9,13 @@ let ref: DocumentReference<DocumentData, DocumentData>;
 
 async function getFirebaseData() {
   try {
-    // if (!currentUser) return { watchedList: [], queueList: [] };
+    const user = auth.currentUser;
+    if (user) {
+      ref = doc(database, `users`, user.uid);
+    } else {
+      ref = doc(database, `users`, currentUser.uid);
+    }
 
-    ref = doc(database, `users`, currentUser.uid);
     const response = await getDoc(ref);
 
     if (!response.data()) {
