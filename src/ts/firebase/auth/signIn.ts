@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Notify } from 'notiflix';
 
-import { onCloseModal } from 'ts/common/modal';
+import { onCloseModal } from 'ts/common/modals/modal';
 
 async function signIn(auth: any, email: string, password: string): Promise<void> {
   try {
@@ -16,8 +16,3 @@ async function signIn(auth: any, email: string, password: string): Promise<void>
 }
 
 export { signIn };
-
-// function getErrorMessage(error: unknown) {
-// 	if (error instanceof Error) return error.message
-// 	return String(error)
-// }

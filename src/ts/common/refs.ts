@@ -12,11 +12,12 @@ const headerLinkRefs: IHeaderLinkRefs = {
 const signOutLibraryRef: HTMLButtonElement = document.querySelector('.signOutLibrary-btn')!;
 
 const authRefs: IAuthRefs = {
-  authBlock: document.querySelector('.auth-block')!,
+  authBlock: document.querySelector('.header-auth-block')!,
   signUp: document.querySelector('.signUp-btn')!,
   signIn: document.querySelector('.signIn-btn')!,
   signOut: document.querySelector('.signOut-btn')!,
-  currentUser: document.querySelector('.userName')!,
+  userWrapper: document.querySelector('.user-wrapper')!,
+  currentUser: document.querySelector('.user-name')!,
 };
 
 const logoRef: HTMLElement = document.querySelector('.js-redirectToHome')!;
@@ -45,6 +46,8 @@ const searchFormRef: HTMLFormElement = document.querySelector('.js-form')!;
 
 const scrollToTopBtnRef: HTMLElement = document.querySelector('.btn-scroll-top ')!;
 
+const themeSwitcher: HTMLInputElement = document.querySelector('.checkbox-theme')!;
+
 export {
   bodyRef,
   preloaderRef,
@@ -58,4 +61,5 @@ export {
   btnLibraryMoviesRefs,
   paginationRef,
   scrollToTopBtnRef,
+  themeSwitcher,
 };

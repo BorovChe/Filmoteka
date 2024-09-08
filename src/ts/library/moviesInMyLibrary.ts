@@ -11,6 +11,7 @@ import { createLibraryPage } from './createPageForLibrary';
 
 import { ListIdsMoviesFromStorage } from '../types/movies';
 import { ICurrentPage } from 'ts/types/helpers';
+import { getFirebaseData } from 'ts/firebase/store/store';
 
 const { startPage } = paginationSettings;
 const itemsPerPage: number = 20;
@@ -21,7 +22,7 @@ btnLibraryMoviesRefs.queueBtn.addEventListener('click', onClickQueueBtn);
 function addHeaderCurrentUser() {
   const user: any = getDataFromLocalStorage('auth');
   authRefs.currentUser.style.display = 'block';
-  authRefs.currentUser.textContent = user.email;
+  authRefs.currentUser.textContent = user.displayName;
 }
 
 addHeaderCurrentUser();
@@ -30,7 +31,7 @@ async function onClickWatchedBtn(): Promise<void> {
   btnLibraryMoviesRefs.queueBtn.classList.remove('active-movie-list');
   btnLibraryMoviesRefs.watchedBtn.classList.add('active-movie-list');
 
-  const watchedList = getDataFromLocalStorage<ListIdsMoviesFromStorage>('watchedListMovies');
+  const { watchedList }: any = await getFirebaseData();
 
   createCurrentPageFromStorage(startPage, 'WATCHED_MOVIES', '');
 
@@ -49,7 +50,7 @@ async function onClickQueueBtn(): Promise<void> {
   btnLibraryMoviesRefs.watchedBtn.classList.remove('active-movie-list');
   btnLibraryMoviesRefs.queueBtn.classList.add('active-movie-list');
 
-  const queueList = getDataFromLocalStorage<ListIdsMoviesFromStorage>('queueListMovies');
+  const { queueList }: any = await getFirebaseData();
 
   createCurrentPageFromStorage(startPage, 'QUEUE_MOVIES', '');
 
@@ -67,8 +68,7 @@ async function onClickQueueBtn(): Promise<void> {
 
 async function libraryRender() {
   const currentPage = getDataFromSessionStorage<ICurrentPage>('currentSetPagination');
-  const watchedList = getDataFromLocalStorage<ListIdsMoviesFromStorage>('watchedListMovies');
-  const queueList = getDataFromLocalStorage<ListIdsMoviesFromStorage>('queueListMovies');
+  const { watchedList, queueList }: any = await getFirebaseData();
 
   headerLinkRefs.library.classList.add('header-link-active');
 

@@ -1,9 +1,9 @@
-function getDataFromLocalStorage<T>(key: string): T[] | [] {
+function getDataFromLocalStorage<T>(key: string): T | null {
   const data: string | null = localStorage.getItem(key);
   if (data) {
     return JSON.parse(data);
   }
-  return [];
+  return null;
 }
 
 function setDataFromLocalSrorage<T>(key: string, data: T): void {

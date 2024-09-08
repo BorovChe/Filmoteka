@@ -1,6 +1,6 @@
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../firebaseInit';
-import { onCloseModal } from 'ts/common/modal';
+import { onCloseModal } from 'ts/common/modals/modal';
 import { Notify } from 'notiflix';
 
 const googleAuthProvider: GoogleAuthProvider = new GoogleAuthProvider();

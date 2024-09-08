@@ -1,3 +1,84 @@
 .auth-container {
-  padding: 40px;
+  min-width: 280px;
+  padding: 20px;
+
+  @include tablet {
+    width: 382px;
+  }
+
+  @include desk {
+    width: 420px;
+  }
+}
+
+.auth-title {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.input-wrapper {
+  margin-bottom: 12px;
+}
+
+.auth-label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--main-color);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 12px;
+  outline: none;
+  border: 1px solid var(--main-color);
+  border-radius: 100px;
+}
+
+.submit-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  margin-bottom: 12px;
+}
+
+.auth-submit-btn {
+  width: 160px;
+  text-transform: uppercase;
+  border-radius: 100px;
+  padding: 12px 24px;
+  font-weight: 500;
+  line-height: 1;
+  border: 1px solid $accent-color;
+  color: var(--main-color);
+  background-color: var(--background-color);
+}
+
+.google-signIn {
+  background-color: transparent;
+  border: none;
+}
+
+.redirect-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.redirect-btn {
+  text-decoration-line: underline;
+
+  border: none;
+  font-size: 14px;
+  color: $accent-color;
+  background-color: transparent;
 }

@@ -39,7 +39,12 @@ const movieDetailsTemplate = ({ id, posterSrc, vote, votes, popularity, title, g
           <li><button class='modal-library-btn js-btn-watched' data-id="${id}">add to Watched</button></li>
           <li><button class='modal-library-btn js-btn-queue' data-id="${id}">add to Queue</button></li>
         </ul>
-        <p class='checked-auth'><button type=button class='signIn-btn-inModal'>SignIn</button> or <button type=button class='signUp-btn-inModal'>SignUp</button> to add movies</p>
+        <div class='checked-auth redirect-wrapper-inModal'>
+         <button type=button class='redirect-btn signIn-btn-inModal'>SignIn</button>
+        <p class='text' checked-auth'>or</p>
+         <button type=button class='redirect-btn signUp-btn-inModal'>SignUp</button>
+       <p class='text'>to add movies</p>
+       </div>
         </div>
        `;
 };

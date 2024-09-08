@@ -1,0 +1,131 @@
+.theme-label {
+  font-family: Roboto, Helvetica, sans-serif;
+  font-weight: 500;
+
+  position: absolute;
+  top: 19px;
+  left: calc(100% - 54px);
+  font-size: 0.65rem;
+
+  display: flex;
+  align-items: center;
+  gap: 1em;
+
+  @include tablet {
+    font-size: 0.75rem;
+    top: 23px;
+    left: 390px;
+  }
+
+  @include desk {
+    font-size: 0.85rem;
+    left: 440px;
+  }
+}
+
+.library-theme-label {
+  @include tablet {
+    font-size: 0.75rem;
+    top: 23px;
+    left: 220px;
+  }
+
+  @include desk {
+    font-size: 0.85rem;
+    left: 260px;
+  }
+}
+/**/
+
+@property --light-dark-toggle-x {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: false;
+}
+
+.light-dark {
+  font-size: 1em;
+  appearance: none;
+  position: relative;
+  aspect-ratio: 2 / 1;
+  width: 4em;
+  background-image: linear-gradient(#0001, #0000, #0000, #0001);
+  background-color: #87b0ff;
+  border-radius: 100em;
+  transition: background-color 0.4s;
+
+  &::before {
+    --light-dark-toggle-x: 0;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    height: 60%;
+    aspect-ratio: 1;
+    background: #ffc;
+    border-radius: 50%;
+    transition: all 0.5s, --light-dark-toggle-x 0.4s;
+    -webkit-mask: radial-gradient(circle at 20% var(--light-dark-toggle-x), #0000 var(--light-dark-toggle-x), #000 0);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 1em;
+    aspect-ratio: 1;
+    background: #fff;
+    border-radius: 50%;
+    left: 70%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    clip-path: polygon(-200% 0, 300% 0, 300% 80%, -200% 80%);
+    box-shadow: -0.5em 0.25em 0 -0.1em #fff, 0.5em 0.3em 0 -0.2em #fff, 0 0 0 0 #fff, 0 0 0 0 #fff, 0 0 0 0 #fff,
+      0 0 0 0 #fff, 0 0 0 0 #fff, 0 0 0 0 #fff;
+    transition: width 0.4s linear, top 0.4s linear, left 0.4s linear, clip-path 0.2s linear,
+      box-shadow 0.3s cubic-bezier(0.75, 1.35, 0.75, 0.75);
+  }
+
+  &:checked {
+    background-color: #050916;
+
+    &::before {
+      left: 75%;
+      --light-dark-toggle-x: 35%;
+    }
+
+    &::after {
+      width: 0.15em;
+      left: 33%;
+      top: 50%;
+      clip-path: polygon(-3000% -2000%, 2000% -2000%, 2000% 300%, -3000% 300%);
+      box-shadow: -0.5em 0.25em 0 -0.02em #fff, 0.5em 0.3em 0 -0.01em #fff, 0.7em -0.285em 0 -0.01em #fff,
+        0.74em -0.5em 0 -0.03em #fff, -0.3em -0.35em 0 -0.02em #fff, 0 -0.06em 0 -0.04em #fff,
+        -0.04em 0.045em 0 -0.04em #fff, 0.05em 0.045em 0 -0.04em #fff;
+    }
+  }
+
+  &[disabled] {
+    opacity: 0.25;
+  }
+}
+
+@media print {
+  .light-dark {
+    &,
+    &::before,
+    &::after {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+}
+
+@media (prefers-reduced-motion) {
+  .light-dark,
+  .light-dark::before,
+  .light-dark::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

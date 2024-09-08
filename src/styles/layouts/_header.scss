@@ -15,6 +15,7 @@
 }
 
 .header-container {
+  position: relative;
   padding: 14px 14px 20px 14px;
   border-radius: 10px;
 
@@ -85,12 +86,12 @@
 
   line-height: 1;
   text-transform: uppercase;
-  background-color: $light-color;
+  background-color: var(--background-color);
 }
 
 .header-link-active {
-  color: $light-color;
-  background-color: $black-color;
+  color: var(--background-color);
+  background-color: var(--main-color);
 }
 
 .header-home-link {
@@ -115,6 +116,10 @@
   }
 }
 
+.opacity-btn {
+  opacity: 0.6;
+}
+
 .header-form {
   position: relative;
 }
@@ -131,7 +136,7 @@
 
   &::placeholder {
     font-weight: 400;
-    color: $black-color;
+    color: #000;
   }
 
   @include tablet {
@@ -163,6 +168,120 @@
   @include tablet {
     width: 16px;
     height: 16px;
+  }
+}
+
+.header-auth-block {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  min-width: 184px;
+  gap: 8px;
+
+  right: 50%;
+  transform: translateX(50%);
+  top: 400px;
+
+  @include tablet {
+    transform: translateX(0);
+
+    right: 16px;
+    top: 16px;
+  }
+
+  @include desk {
+    right: 32px;
+    top: 16px;
+  }
+}
+
+.header-auth-btn {
+  text-transform: uppercase;
+  border-radius: 100px;
+  padding: 10px 22px;
+  font-weight: 500;
+  line-height: 1;
+  border: none;
+  color: var(--main-color);
+  background-color: var(--background-color);
+
+  @include tablet {
+    padding: 12px 20px;
+  }
+
+  @include desk {
+    padding: 14px 24px;
+  }
+}
+
+.signOut-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 100px;
+  border: none;
+
+  fill: var(--main-color);
+  background-color: var(--background-color);
+
+  &:hover {
+    background-color: rgb(209, 0, 0);
+  }
+
+  @include tablet {
+    width: 36px;
+    height: 36px;
+  }
+
+  @include desk {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.user-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  gap: 4px;
+  font-size: 14px;
+  border-radius: 100px;
+  padding: 4px 8px;
+  font-weight: 500;
+  line-height: 1;
+
+  background-color: var(--background-color);
+
+  @include tablet {
+    padding: 2px 8px;
+    font-size: 12px;
+    height: 36px;
+  }
+
+  @include desk {
+    padding: 4px 8px;
+    height: 40px;
+  }
+}
+
+.user-icon {
+  width: 22px;
+  height: 22px;
+
+  fill: var(--main-color);
+
+  @include tablet {
+    width: 24px;
+    height: 24px;
+  }
+
+  @include desk {
+    width: 32px;
+    height: 32px;
   }
 }
 
@@ -204,7 +323,7 @@
   font-size: 32px;
   font-weight: 500;
   line-height: 1;
-  color: $light-color;
+  color: #fff;
 
   @include tablet {
     font-size: 40px;
@@ -253,13 +372,13 @@
 
   @include tablet {
     right: 16px;
-    bottom: 160px;
+    bottom: 16px;
     transform: translateX(0);
   }
 
   @include desk {
     right: 32px;
-    bottom: 247px;
+    bottom: 32px;
     gap: 8px;
   }
 }
@@ -274,7 +393,7 @@
   text-transform: uppercase;
   text-align: center;
   color: $accent-color;
-  background: $light-color;
+  background: '#fff';
 
   @include tablet {
     padding: 12px 24px;
@@ -292,6 +411,18 @@
 }
 
 .active-movie-list {
-  color: $light-color;
+  color: #fff;
   background-color: $accent-color;
+}
+
+.header-library-auth-block {
+  top: 340px;
+
+  @include tablet {
+    top: 16px;
+  }
+
+  @include desk {
+    top: 16px;
+  }
 }

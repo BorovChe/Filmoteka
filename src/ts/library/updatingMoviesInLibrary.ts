@@ -1,5 +1,3 @@
-import { findIndexMovie, someFunctionMovie } from 'ts/helpers/filterMethods';
-import { setDataFromLocalSrorage, getDataFromLocalStorage } from 'ts/storage/localStorage/localStorageController';
 import { checkingForLibraryMoviesAndRender } from 'ts/helpers/checkingForMovies';
 import { moviesListRefs } from 'ts/common/refs';
 import { getMoviesListOnLibrary } from 'ts/helpers/getPromiseSettled';
@@ -9,26 +7,21 @@ import { createLibraryPage } from 'ts/library/createPageForLibrary';
 import { ListIdsMoviesFromStorage } from 'ts/types/movies';
 import { ICurrentPage } from 'ts/types/helpers';
 import { getDataFromSessionStorage } from 'ts/storage/sessionStorage/sessionStorageController';
-// import { updateMoviesData, writeMoviesData } from 'ts/firebase/store/store';
-import { get } from 'firebase/database';
-
-const watchedList: ListIdsMoviesFromStorage[] = getDataFromLocalStorage('watchedListMovies');
-const queueList: ListIdsMoviesFromStorage[] = getDataFromLocalStorage('queueListMovies');
+import { addDataForStorage, getFirebaseData, ref, removeDataForStorage } from 'ts/firebase/store/store';
+import { arrayRemove, arrayUnion } from 'firebase/firestore';
 
 async function onClickWacthedBtn(btnRef: HTMLElement | null, movieId: ListIdsMoviesFromStorage): Promise<void> {
   const currentId: ListIdsMoviesFromStorage = { ...movieId };
-
   const currentPage = getDataFromSessionStorage<ICurrentPage>('currentSetPagination')!;
 
   if (btnRef?.textContent === 'remove to Watched') {
     btnRef.classList.remove('modal-library-btn-active');
     btnRef.textContent = 'add to Watched';
 
-    const index: number = findIndexMovie(watchedList, currentId.id);
-    watchedList.splice(index, 1);
-    setDataFromLocalSrorage('watchedListMovies', watchedList);
+    removeDataForStorage({ watchedList: arrayRemove(currentId) });
 
     if (currentPage.type === 'WATCHED_MOVIES') {
+      const { watchedList }: any = await getFirebaseData();
       const staticPage: ListIdsMoviesFromStorage[] = createLibraryPage(watchedList, currentPage.page, 20);
       checkingForLibraryMoviesAndRender(
         moviesListRefs.libraryMoviesList,
@@ -41,13 +34,10 @@ async function onClickWacthedBtn(btnRef: HTMLElement | null, movieId: ListIdsMov
     btnRef!.textContent = 'remove to Watched';
     btnRef!.classList.add('modal-library-btn-active');
 
-    watchedList.push(currentId);
-    // writeMoviesData(currentId.id);
-    // updateMoviesData(currentId.id);
-    // await getFirebaseFata();
-    setDataFromLocalSrorage('watchedListMovies', watchedList);
+    addDataForStorage({ watchedList: arrayUnion(currentId) });
 
     if (currentPage.type === 'WATCHED_MOVIES') {
+      const { watchedList }: any = await getFirebaseData();
       const staticPage: ListIdsMoviesFromStorage[] = createLibraryPage(watchedList, currentPage.page, 20);
       checkingForLibraryMoviesAndRender(
         moviesListRefs.libraryMoviesList,
@@ -67,10 +57,10 @@ async function onClickQueueBtn(btnRef: HTMLElement | null, movieId: ListIdsMovie
     btnRef.classList.remove('modal-library-btn-active');
     btnRef.textContent = 'add to Queue';
 
-    const index: number = findIndexMovie(queueList, movieId.id);
-    queueList.splice(index, 1);
-    setDataFromLocalSrorage('queueListMovies', queueList);
+    removeDataForStorage({ queueList: arrayRemove(currentId) });
+
     if (currentPage.type === 'QUEUE_MOVIES') {
+      const { queueList }: any = await getFirebaseData();
       const staticPage: ListIdsMoviesFromStorage[] = createLibraryPage(queueList, currentPage.page, 20);
       checkingForLibraryMoviesAndRender(
         moviesListRefs.libraryMoviesList,
@@ -83,10 +73,10 @@ async function onClickQueueBtn(btnRef: HTMLElement | null, movieId: ListIdsMovie
     btnRef!.textContent = 'remove to Queue';
     btnRef!.classList.add('modal-library-btn-active');
 
-    queueList.push(currentId);
-    setDataFromLocalSrorage('queueListMovies', queueList);
+    addDataForStorage({ queueList: arrayUnion(currentId) });
 
     if (currentPage.type === 'QUEUE_MOVIES') {
+      const { queueList }: any = await getFirebaseData();
       const staticPage: ListIdsMoviesFromStorage[] = createLibraryPage(queueList, currentPage.page, 20);
       checkingForLibraryMoviesAndRender(
         moviesListRefs.libraryMoviesList,
@@ -98,15 +88,21 @@ async function onClickQueueBtn(btnRef: HTMLElement | null, movieId: ListIdsMovie
   }
 }
 
-function watchedMovieAdditionCheck(btnRef: HTMLElement | null, movieId: string): void {
-  if (someFunctionMovie(watchedList, movieId)) {
+async function watchedMovieAdditionCheck(btnRef: HTMLElement | null, movieId: string): Promise<void> {
+  const { watchedList }: any = await getFirebaseData();
+  const checkedMovies = watchedList.some(({ id }: ListIdsMoviesFromStorage): boolean => id === movieId);
+
+  if (checkedMovies) {
     btnRef!.textContent = 'remove to Watched';
     btnRef!.classList.add('modal-library-btn-active');
   }
 }
 
-function queueMovieAdditionCheck(btnRef: HTMLElement | null, movieId: string): void {
-  if (someFunctionMovie(queueList, movieId)) {
+async function queueMovieAdditionCheck(btnRef: HTMLElement | null, movieId: string): Promise<void> {
+  const { queueList }: any = await getFirebaseData();
+  const checkedMovies = queueList.some(({ id }: ListIdsMoviesFromStorage): boolean => id === movieId);
+
+  if (checkedMovies) {
     btnRef!.textContent = 'remove to Queue';
     btnRef!.classList.add('modal-library-btn-active');
   }

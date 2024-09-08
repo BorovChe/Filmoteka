@@ -37,9 +37,10 @@ function onClickModalContainer(e: any): void {
 async function onSubmit(e: any): Promise<void> {
   if (!formRef) return;
   e.preventDefault();
-  const formData: FormData = new FormData(formRef);
+  const formData: FormData = new FormData();
+  const name: string = formData.get('name') as string;
   const email: string = formData.get('email') as string;
   const password: string = formData.get('password') as string;
 
-  formRef.classList.contains('signUp-form') ? signUp(auth, email, password) : signIn(auth, email, password);
+  formRef.classList.contains('signUp-form') ? signUp(auth, name, email, password) : signIn(auth, email, password);
 }

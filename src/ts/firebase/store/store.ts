@@ -1,36 +1,35 @@
-import { child, get, getDatabase, push, ref, set } from 'firebase/database';
 import { getDataFromLocalStorage } from 'ts/storage/localStorage/localStorageController';
 import { database } from '../firebaseInit';
+import { doc, DocumentData, DocumentReference, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 
 const currentUser: any = getDataFromLocalStorage('auth');
 
-const moviesListRef = ref(database, 'movies/' + currentUser.uid);
+let ref: DocumentReference<DocumentData, DocumentData>;
 
-// function writeMoviesData(movieid: string) {
-//   set(moviesListRef, [{ movieid: movieid }]);
-// }
+async function getFirebaseData() {
+  try {
+    // if (!currentUser) return { watchedList: [], queueList: [] };
 
-// function updateMoviesData(movieid: string) {
-//   // const postListRef = ref(database, 'movies/' + currentUser.uid);
-//   const newPostRef = push(ref(database));
-//   console.log(newPostRef);
-//   set(newPostRef + currentUser.uid, { movieid: movieid });
-// }
+    ref = doc(database, `users`, currentUser.uid);
+    const response = await getDoc(ref);
 
-// const dbRef = ref(getDatabase());
+    if (!response.data()) {
+      await setDoc(ref, { watchedList: [], queueList: [] });
+      return { watchedList: [], queueList: [] };
+    } else {
+      return response.data();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-// async function getFirebaseFata() {
-//   await get(child(dbRef, `users/${currentUser}`))
-//     .then(snapshot => {
-//       if (snapshot.exists()) {
-//         console.log(snapshot.val());
-//       } else {
-//         console.log('No data available');
-//       }
-//     })
-//     .catch(error => {
-//       console.error(error);
-//     });
-// }
+async function addDataForStorage(data: any) {
+  await updateDoc(ref, data);
+}
 
-// export { writeMoviesData, updateMoviesData };
+async function removeDataForStorage(data: any) {
+  await updateDoc(ref, data);
+}
+
+export { getFirebaseData, addDataForStorage, removeDataForStorage, ref };

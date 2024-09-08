@@ -8,6 +8,7 @@ interface IAuthRefs {
   signUp: HTMLElement;
   signIn: HTMLElement;
   signOut: HTMLElement;
+  userWrapper: HTMLDivElement;
   currentUser: HTMLElement;
 }
 
@@ -30,6 +31,7 @@ interface IBtnLibraryRefs {
 }
 
 interface IBtnLibraryRefsInModal {
+  listBtn: HTMLButtonElement | null;
   watched: HTMLButtonElement | null;
   queue: HTMLButtonElement | null;
   checkedAuth: HTMLElement | null;
